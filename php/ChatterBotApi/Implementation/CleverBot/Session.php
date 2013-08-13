@@ -18,13 +18,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use ChatterBotApi;
+use ChatterBotApi\ChatterBotTought;
+use ChatterBotApi\ChatterBotSession;
 
 class Session extends ChatterBotSession
 {
 	/**
 	 * The assoc. bot of this session
-	 * @var [type]
+	 * @var \ChatterBotApi\Implementation\CleverBot\CleverBot
 	 */
 	private $bot;
 
@@ -38,7 +39,7 @@ class Session extends ChatterBotSession
 	 * Constructor.
 	 * @param \ChatterBotApi\Implementation\CleverBot\CleverBot $bot The bot
 	 */
-	public function __construct($bot)
+	public function __construct(CleverBot $bot)
 	{
 		$this->bot = $bot;
 		$this->vars = array();
@@ -55,7 +56,7 @@ class Session extends ChatterBotSession
 	 * @param  \ChatterBotApi\ChatterBotTought $thought The previous thought
 	 * @return \ChatterBotApi\ChatterBotTought          The new thought.
 	 */
-	public function thinkThought($thought)
+	public function thinkThought(ChatterBotTought $thought)
 	{
 		$this->vars['stimulus'] = $thought->getText();
 		$data = http_build_query($this->vars);
