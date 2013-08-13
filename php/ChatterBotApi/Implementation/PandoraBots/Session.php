@@ -19,6 +19,7 @@
  */
 
 use SimpleXMLElement;
+use ChatterBotApi\Utils;
 use ChatterBotApi\ChatterBotSession;
 use ChatterBotApi\ChatterBotThought;
 
@@ -49,11 +50,17 @@ class Session extends ChatterBotSession
 	public function thinkThought(ChatterBotThought $thought)
 	{
 		$this->vars['input'] = $thought->getText();
-		$response = _utils_post('http://www.pandorabots.com/pandora/talk-xml', $this->vars);
+		$response = Utils::post('http://www.pandorabots.com/pandora/talk-xml', $this->vars);
 		$element = new SimpleXMLElement($response);
 		$result = $element->xpath('//result/that/text()');
 		$responseThought = new ChatterBotThought();
-		$responseThought->setText($result[0][0]);
+
+		if (isset($result[0][0])) {
+			$responseThought->setText($result[0][0]);
+		} else { // Happens hardly ever
+			$responseThought->setText('');
+		}
+		
 		return $responseThought;
 	}
 }

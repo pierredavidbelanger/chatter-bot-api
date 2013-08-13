@@ -18,6 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use ChatterBotApi\Utils;
 use ChatterBotApi\ChatterBotThought;
 use ChatterBotApi\ChatterBotSession;
 
@@ -63,34 +64,34 @@ class Session extends ChatterBotSession
 		$dataToDigest = substr($data, 9, 20);
 		$dataDigest = md5($dataToDigest);
 		$this->vars['icognocheck'] = $dataDigest;
-		$response = _utils_post($this->bot->getUrl(), $this->vars);
-		$responseValues = split("\r", $response);
-		//self.vars['??'] = _utils_string_at_index($responseValues, 0);
-		$this->vars['sessionid'] = _utils_string_at_index($responseValues, 1);
-		$this->vars['logurl'] = _utils_string_at_index($responseValues, 2);
-		$this->vars['vText8'] = _utils_string_at_index($responseValues, 3);
-		$this->vars['vText7'] = _utils_string_at_index($responseValues, 4);
-		$this->vars['vText6'] = _utils_string_at_index($responseValues, 5);
-		$this->vars['vText5'] = _utils_string_at_index($responseValues, 6);
-		$this->vars['vText4'] = _utils_string_at_index($responseValues, 7);
-		$this->vars['vText3'] = _utils_string_at_index($responseValues, 8);
-		$this->vars['vText2'] = _utils_string_at_index($responseValues, 9);
-		$this->vars['prevref'] = _utils_string_at_index($responseValues, 10);
-		//$this->vars['??'] = _utils_string_at_index($responseValues, 11);
-		$this->vars['emotionalhistory'] = _utils_string_at_index($responseValues, 12);
-		$this->vars['ttsLocMP3'] = _utils_string_at_index($responseValues, 13);
-		$this->vars['ttsLocTXT'] = _utils_string_at_index($responseValues, 14);
-		$this->vars['ttsLocTXT3'] = _utils_string_at_index($responseValues, 15);
-		$this->vars['ttsText'] = _utils_string_at_index($responseValues, 16);
-		$this->vars['lineRef'] = _utils_string_at_index($responseValues, 17);
-		$this->vars['lineURL'] = _utils_string_at_index($responseValues, 18);
-		$this->vars['linePOST'] = _utils_string_at_index($responseValues, 19);
-		$this->vars['lineChoices'] = _utils_string_at_index($responseValues, 20);
-		$this->vars['lineChoicesAbbrev'] = _utils_string_at_index($responseValues, 21);
-		$this->vars['typingData'] = _utils_string_at_index($responseValues, 22);
-		$this->vars['divert'] = _utils_string_at_index($responseValues, 23);
+		$response = Utils::post($this->bot->getUrl(), $this->vars);
+		$responseValues = explode("\r", $response);
+		//self.vars['??'] = Utils::stringAtIndex($responseValues, 0);
+		$this->vars['sessionid'] = Utils::stringAtIndex($responseValues, 1);
+		$this->vars['logurl'] = Utils::stringAtIndex($responseValues, 2);
+		$this->vars['vText8'] = Utils::stringAtIndex($responseValues, 3);
+		$this->vars['vText7'] = Utils::stringAtIndex($responseValues, 4);
+		$this->vars['vText6'] = Utils::stringAtIndex($responseValues, 5);
+		$this->vars['vText5'] = Utils::stringAtIndex($responseValues, 6);
+		$this->vars['vText4'] = Utils::stringAtIndex($responseValues, 7);
+		$this->vars['vText3'] = Utils::stringAtIndex($responseValues, 8);
+		$this->vars['vText2'] = Utils::stringAtIndex($responseValues, 9);
+		$this->vars['prevref'] = Utils::stringAtIndex($responseValues, 10);
+		//$this->vars['??'] = Utils::stringAtIndex($responseValues, 11);
+		$this->vars['emotionalhistory'] = Utils::stringAtIndex($responseValues, 12);
+		$this->vars['ttsLocMP3'] = Utils::stringAtIndex($responseValues, 13);
+		$this->vars['ttsLocTXT'] = Utils::stringAtIndex($responseValues, 14);
+		$this->vars['ttsLocTXT3'] = Utils::stringAtIndex($responseValues, 15);
+		$this->vars['ttsText'] = Utils::stringAtIndex($responseValues, 16);
+		$this->vars['lineRef'] = Utils::stringAtIndex($responseValues, 17);
+		$this->vars['lineURL'] = Utils::stringAtIndex($responseValues, 18);
+		$this->vars['linePOST'] = Utils::stringAtIndex($responseValues, 19);
+		$this->vars['lineChoices'] = Utils::stringAtIndex($responseValues, 20);
+		$this->vars['lineChoicesAbbrev'] = Utils::stringAtIndex($responseValues, 21);
+		$this->vars['typingData'] = Utils::stringAtIndex($responseValues, 22);
+		$this->vars['divert'] = Utils::stringAtIndex($responseValues, 23);
 		$responseThought = new ChatterBotThought();
-		$responseThought->setText(_utils_string_at_index($responseValues, 16));
+		$responseThought->setText(Utils::stringAtIndex($responseValues, 16));
 		return $responseThought;
 	}
 }
