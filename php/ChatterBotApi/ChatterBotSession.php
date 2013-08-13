@@ -25,10 +25,10 @@ abstract class ChatterBotSession
 {
 	/**
 	 * Return new thought based on given thought
-	 * @param  \ChatterBotApi\ChatterBotTought $thought The previous thought
-	 * @return \ChatterBotApi\ChatterBotTought          The new thought.
+	 * @param  \ChatterBotApi\ChatterBotThought $thought The previous thought
+	 * @return \ChatterBotApi\ChatterBotThought          The new thought.
 	 */
-	public function thinkThought($thought)
+	public function thinkThought(ChatterBotThought $thought)
 	{
 		return $thought;
 	}
@@ -37,7 +37,7 @@ abstract class ChatterBotSession
 	 * Return a new thought based on given string
 	 * @param  string $text The text
 	 * 
-	 * @return \ChatterBotApi\ChatterBotTought    The new thought.
+	 * @return \ChatterBotApi\ChatterBotThought    The new thought.
 	 */
 	public function think($text)
 	{

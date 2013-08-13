@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use ChatterBotApi;
+use ChatterBotApi\ChatterBot;
 
 /**
  * A cleverbot
@@ -64,6 +64,6 @@ class CleverBot extends ChatterBot
 	 */
 	public function createSession()
 	{
-		return new _CleverbotSession($this);
+		return new Session($this);
 	}
 }

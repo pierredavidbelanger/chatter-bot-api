@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use ChatterBotApi;
+use ChatterBotApi\ChatterBot;
 
 /**
  * A Pandora Bot

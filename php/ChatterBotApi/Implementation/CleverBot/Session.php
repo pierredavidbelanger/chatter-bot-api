@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use ChatterBotApi\ChatterBotTought;
+use ChatterBotApi\ChatterBotThought;
 use ChatterBotApi\ChatterBotSession;
 
 class Session extends ChatterBotSession
@@ -56,7 +56,7 @@ class Session extends ChatterBotSession
 	 * @param  \ChatterBotApi\ChatterBotTought $thought The previous thought
 	 * @return \ChatterBotApi\ChatterBotTought          The new thought.
 	 */
-	public function thinkThought(ChatterBotTought $thought)
+	public function thinkThought(ChatterBotThought $thought)
 	{
 		$this->vars['stimulus'] = $thought->getText();
 		$data = http_build_query($this->vars);

@@ -19,6 +19,8 @@
  */
 
 use Exception;
+use ChatterBotApi\Implementation\CleverBot\CleverBot;
+use ChatterBotApi\Implementation\PandoraBots\PandoraBots;
 
 /** 
  * The ChatterBotFactory
@@ -34,21 +36,21 @@ class ChatterBotFactory
 	 *
 	 * @throws \Exception When type not recognized or no BotId bassed to the PandoraBot
 	 */
-	public function create($type, $arg = null)
+	public static function create($type, $arg = null)
 	{
 		switch ($type) {
 			case ChatterBotType::CLEVERBOT:
-				return new _Cleverbot('http://www.cleverbot.com/webservicemin');
+				return new Cleverbot('http://www.cleverbot.com/webservicemin');
 			
 
 			case ChatterBotType::JABBERWACKY:
-				return new _Cleverbot('http://jabberwacky.com/webservicemin');
+				return new Cleverbot('http://jabberwacky.com/webservicemin');
 			
 			case ChatterBotType::PANDORABOTS:
 				if ($arg == null) {
 					throw new Exception('PANDORABOTS needs a botid arg');
 				}
-			return new _Pandorabots($arg);
+			return new PandoraBots($arg);
 
 			default:
 				throw new Exception('Type not recognized');

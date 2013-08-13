@@ -46,7 +46,7 @@ class Session extends ChatterBotSession
 	 * @param  \ChatterBotApi\ChatterBotTought $thought The previous thought
 	 * @return \ChatterBotApi\ChatterBotTought          The new thought.
 	 */
-	public function thinkThought(ChatterBotTought $thought)
+	public function thinkThought(ChatterBotThought $thought)
 	{
 		$this->vars['input'] = $thought->getText();
 		$response = _utils_post('http://www.pandorabots.com/pandora/talk-xml', $this->vars);
