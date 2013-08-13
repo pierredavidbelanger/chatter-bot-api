@@ -157,7 +157,7 @@
             $dataDigest = md5($dataToDigest);
             $this->vars['icognocheck'] = $dataDigest;
             $response = _utils_post($this->bot->getUrl(), $this->vars);
-            $responseValues = split("\r", $response);
+            $responseValues = explode("\r", $response);
             //self.vars['??'] = _utils_string_at_index($responseValues, 0);
             $this->vars['sessionid'] = _utils_string_at_index($responseValues, 1);
             $this->vars['logurl'] = _utils_string_at_index($responseValues, 2);
