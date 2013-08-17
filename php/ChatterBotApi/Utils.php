@@ -59,7 +59,7 @@ class Utils
 	 */
 	public static function stringAtIndex($strings, $index)
 	{
-		if (count($strings) > $index) {
+		if (count($strings) > $index && isset($strings[$index])) {
 			return $strings[$index];
 		} else {
 			return '';

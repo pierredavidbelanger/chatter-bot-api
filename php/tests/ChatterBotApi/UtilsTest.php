@@ -35,11 +35,26 @@ class UtilsTest extends PHPUnit_Framework_TestCase
 	public function stringAtIndexData()
 	{
 		return array(
-			array(
-				array('Foo', 'Bar', 'Baz'),
-				1,
-				'Bar'
-				)
+				array(
+					array('Foo', 'Bar', 'Baz'),
+					0,
+					'Foo'
+				),
+				array(
+					array('Foo', 'Bar', 'Baz'),
+					1,
+					'Bar'
+				),
+				array(
+					array('Foo', 'Bar', 'Baz'),
+					2,
+					'Baz'
+				),
+				array(
+					array('Foo', 'Bar', 'Baz'),
+					8,
+					''
+				),
 			);
 	}
 }
