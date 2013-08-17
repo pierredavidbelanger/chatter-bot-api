@@ -19,7 +19,7 @@
     
     /**
      * This tests were written by:
-     * Christian Gaertner <christiangaertner.film@googlemail.com>
+     * Christian Gärtner <christiangaertner.film@googlemail.com>
      */
      
 require 'vendor/autoload.php';

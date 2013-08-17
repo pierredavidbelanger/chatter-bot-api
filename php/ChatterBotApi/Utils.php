@@ -18,7 +18,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 /**
  * Utils class 
  */
@@ -38,8 +37,16 @@ class Utils
 		$contextParams['http']['content'] = http_build_query($params);
 		$contextParams['http']['header'] = "Content-Type: application/x-www-form-urlencoded\r\n";
 		$context = stream_context_create($contextParams);
-		$fp = fopen($url, 'rb', false, $context);
-		$response = stream_get_contents($fp);
+		$fp = @fopen($url, 'rb', false, $context);
+		if (!$fp) {
+			throw new IOException('Connection refused', 0, $url);
+		}
+
+		$response = @stream_get_contents($fp);
+
+		if ($response === false || $response === null) {
+			throw new IOException('Cannot grab data', 0, $url);	
+		}
 		fclose($fp);
 		return $response;
 	}
