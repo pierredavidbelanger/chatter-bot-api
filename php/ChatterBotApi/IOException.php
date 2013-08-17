@@ -31,6 +31,9 @@ class IOException extends Exception
 
 	public function __construct($message, $code = 0, $path = null, Exception $previous = null)
 	{
+		if ($path === '' && $path !== null) {
+			$path = '<EMPTY STRING GIVEN>';
+		}
 		$this->path = $path;
 		parent::__construct($message, $code, $previous);
 	}
