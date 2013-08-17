@@ -18,6 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use Exception;
 use SimpleXMLElement;
 use ChatterBotApi\Utils;
 use ChatterBotApi\AbstractSession;
@@ -38,29 +39,33 @@ class Session extends AbstractSession
 	public function __construct(PandoraBots $bot)
 	{
 		$this->vars = array();
-		$this->vars['botid'] = $bot->getId();
-		$this->vars['custid'] = uniqid();
+		$this->vars['botid']	= $bot->getId();
+		$this->vars['custid']	= uniqid();
 	}
 
 	/**
 	 * Return new thought based on given thought
 	 * @param  \ChatterBotApi\ChatterBotTought $thought The previous thought
 	 * @return \ChatterBotApi\ChatterBotTought          The new thought.
+	 *
+	 * @throws \Exception If response is empty (when input string is empty)
 	 */
 	public function thinkThought(ChatterBotThought $thought)
 	{
 		$this->vars['input'] = $thought->getText();
+		
+
 		$response = Utils::post('http://www.pandorabots.com/pandora/talk-xml', $this->vars);
+		
 		$element = new SimpleXMLElement($response);
+
 		$result = $element->xpath('//result/that/text()');
-		$responseThought = new ChatterBotThought();
 
 		if (isset($result[0][0])) {
-			$responseThought->setText($result[0][0]);
-		} else { // Happens hardly ever
-			$responseThought->setText('');
+			return ChatterBotThought::make($result[0][0]);
+		} else {
+			throw new Exception('Empty Response');
+			
 		}
-		
-		return $responseThought;
 	}
 }

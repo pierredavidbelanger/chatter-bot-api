@@ -32,7 +32,7 @@ class ChatterBotThought
 	/**
 	 * Factory Method.
 	 * @param  string $text [description]
-	 * @return [type]       [description]
+	 * @return \ChatterBotApi\ChatterBotThought       The new instance
 	 */
 	public static function make($text = '')
 	{
@@ -55,6 +55,16 @@ class ChatterBotThought
 	public function __toString()
 	{
 		return (string) $this->text;
+	}
+
+	/**
+	 * Wrapper for getText()
+	 * @uses getText()
+	 * @return string The text
+	 */
+	public function message()
+	{
+		return $this->getText();
 	}
 
 	/**
