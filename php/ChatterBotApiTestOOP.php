@@ -43,16 +43,20 @@ while (1)
 
     try {
         $th = $bot2session->think($th->message());
-    } catch (Exception $e) {
+    } catch (IOException $e) {
         echo $e;
+    } catch (Exception $e) {
+        // Ignore these
     }
 
     echo "bot2> $th\n";
 
     try {
         $th = $bot1session->think($th->message());
-    } catch (Exception $e) {
+    } catch (IOException $e) {
         echo $e;
+    } catch (Exception $e) {
+        // Ignore these
     }
     
 }
