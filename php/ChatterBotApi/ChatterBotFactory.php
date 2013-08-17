@@ -19,6 +19,7 @@
  */
 
 use Exception;
+use InvalidArgumentException;
 use ChatterBotApi\Implementation\CleverBot\CleverBot;
 use ChatterBotApi\Implementation\PandoraBots\PandoraBots;
 
@@ -53,7 +54,7 @@ class ChatterBotFactory
 			return new PandoraBots($arg);
 
 			default:
-				throw new Exception('Type not recognized');
+				throw new InvalidArgumentException('Type not recognized');
 				
 		}
 	}
