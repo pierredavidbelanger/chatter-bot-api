@@ -32,7 +32,7 @@ use ChatterBotApi\ChatterBotFactory;
 $bot1 = ChatterBotFactory::create(ChatterBotType::CLEVERBOT);
 $bot1session = $bot1->createSession();
 
-$bot2 = ChatterBotFactory::create(ChatterBotType::PANDORABOTS, 'b0dafd24ee35a477');
+$bot2 = ChatterBotFactory::create(ChatterBotType::PANDORABOTS, ChatterBotType::PANDORABOTS_DEFAULT_ID);
 $bot2session = $bot2->createSession();
 
 $th = ChatterBotThought::make('Hi');
@@ -40,7 +40,7 @@ $th = ChatterBotThought::make('Hi');
 while (1)
 {
     echo "bot1> $th\n";
-    
+
     try {
         $th = $bot2session->think($th->message());
     } catch (Exception $e) {

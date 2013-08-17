@@ -40,4 +40,10 @@ class ChatterBotType
 	 * @var int 3
 	 */
 	const PANDORABOTS = 3;
+
+	/**
+	 * A "good" bot ID
+	 * @var string
+	 */
+	const PANDORABOTS_DEFAULT_ID = 'b0dafd24ee35a477';
 }
