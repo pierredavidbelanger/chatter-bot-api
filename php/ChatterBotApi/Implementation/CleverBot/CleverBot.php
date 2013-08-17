@@ -18,12 +18,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use ChatterBotApi\ChatterBot;
+use ChatterBotApi\AbstractBot;
 
 /**
  * A cleverbot
  */
-class CleverBot extends ChatterBot
+class CleverBot extends AbstractBot
 {
 	/**
 	 * The url for this chatterbot

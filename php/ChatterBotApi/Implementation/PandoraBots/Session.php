@@ -20,10 +20,10 @@
 
 use SimpleXMLElement;
 use ChatterBotApi\Utils;
-use ChatterBotApi\ChatterBotSession;
+use ChatterBotApi\AbstractSession;
 use ChatterBotApi\ChatterBotThought;
 
-class Session extends ChatterBotSession
+class Session extends AbstractSession
 {
 	/**
 	 * Varibales used for creating the request
@@ -38,7 +38,7 @@ class Session extends ChatterBotSession
 	public function __construct(PandoraBots $bot)
 	{
 		$this->vars = array();
-		$this->vars['botid'] = $bot->getBotid();
+		$this->vars['botid'] = $bot->getId();
 		$this->vars['custid'] = uniqid();
 	}
 

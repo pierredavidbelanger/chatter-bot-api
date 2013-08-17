@@ -19,30 +19,16 @@
  */
 
 /**
- * Abstract for all ChatterBot Sessions
+ * Abstract for all ChatterBots
  */
-abstract class ChatterBotSession
+abstract class AbstractBot
 {
 	/**
-	 * Return new thought based on given thought
-	 * @param  \ChatterBotApi\ChatterBotThought $thought The previous thought
-	 * @return \ChatterBotApi\ChatterBotThought          The new thought.
+	 * Create the session
+	 * @return \ChatterBotApi\ChatterBotSession The new session instance
 	 */
-	public function thinkThought(ChatterBotThought $thought)
+	public function createSession()
 	{
-		return $thought;
+		return null;
 	}
-
-	/**
-	 * Return a new thought based on given string
-	 * @param  string $text The text
-	 * 
-	 * @return \ChatterBotApi\ChatterBotThought    The new thought.
-	 */
-	public function think($text)
-	{
-		$thought = new ChatterBotThought();
-		$thought->setText($text);
-		return $this->thinkThought($thought)->getText();
-	}
-}
+} 

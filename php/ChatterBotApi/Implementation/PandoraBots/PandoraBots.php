@@ -18,12 +18,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use ChatterBotApi\ChatterBot;
+use ChatterBotApi\AbstractBot;
 
 /**
  * A Pandora Bot
  */
-class PandoraBots extends ChatterBot
+class PandoraBots extends AbstractBot
 {	
 	/**
 	 * The BotID
@@ -44,7 +44,7 @@ class PandoraBots extends ChatterBot
 	 * Returns the bot ID
 	 * @return string The bot ID
 	 */
-	public function getBotid()
+	public function getId()
 	{
 		return $this->botid;
 	}
@@ -53,7 +53,7 @@ class PandoraBots extends ChatterBot
 	 * Set the bot ID
 	 * @param string $botid The bot ID
 	 */
-	public function setBotid($botid)
+	public function setId($botid)
 	{
 		$this->botid = $botid;
 	}        

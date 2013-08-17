@@ -20,9 +20,9 @@
 
 use ChatterBotApi\Utils;
 use ChatterBotApi\ChatterBotThought;
-use ChatterBotApi\ChatterBotSession;
+use ChatterBotApi\AbstractSession;
 
-class Session extends ChatterBotSession
+class Session extends AbstractSession
 {
 	/**
 	 * The assoc. bot of this session

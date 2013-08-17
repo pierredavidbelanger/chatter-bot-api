@@ -30,6 +30,34 @@ class ChatterBotThought
 	private $text;
 
 	/**
+	 * Factory Method.
+	 * @param  string $text [description]
+	 * @return [type]       [description]
+	 */
+	public static function make($text = '')
+	{
+		return new static($text);
+	}
+
+	/**
+	 * Contructor.
+	 * @param string $text The text
+	 */
+	public function __construct($text = '')
+	{
+		$this->setText($text);
+	}
+
+	/**
+	 * Magic Method __toString
+	 * @return string The text
+	 */
+	public function __toString()
+	{
+		return (string) $this->text;
+	}
+
+	/**
 	 * Get the text of this thought
 	 * @return string The text
 	 */
