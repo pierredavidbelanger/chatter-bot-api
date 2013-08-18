@@ -24,46 +24,46 @@ use ChatterBotApi\AbstractBot;
  * A Pandora Bot
  */
 class PandoraBots extends AbstractBot
-{	
-	/**
-	 * The BotID
-	 * @var string
-	 */
-	private $botid;
+{   
+    /**
+     * The BotID
+     * @var string
+     */
+    private $botid;
 
-	/**
-	 * Constructor.
-	 * @param string $botid The Bot ID
-	 */
-	public function __construct($botid)
-	{
-		$this->botid = $botid;
-	}
+    /**
+     * Constructor.
+     * @param string $botid The Bot ID
+     */
+    public function __construct($botid)
+    {
+        $this->botid = $botid;
+    }
 
-	/**
-	 * Returns the bot ID
-	 * @return string The bot ID
-	 */
-	public function getId()
-	{
-		return $this->botid;
-	}
+    /**
+     * Returns the bot ID
+     * @return string The bot ID
+     */
+    public function getId()
+    {
+        return $this->botid;
+    }
 
-	/**
-	 * Set the bot ID
-	 * @param string $botid The bot ID
-	 */
-	public function setId($botid)
-	{
-		$this->botid = $botid;
-	}        
+    /**
+     * Set the bot ID
+     * @param string $botid The bot ID
+     */
+    public function setId($botid)
+    {
+        $this->botid = $botid;
+    }        
 
-	/**
-	 * Create a new Session for this bot
-	 * @return \ChatterBotApi\Implementation\PandoraBots\Session The new Session
-	 */
-	public function createSession()
-	{
-		return new Session($this);
-	}
+    /**
+     * Create a new Session for this bot
+     * @return \ChatterBotApi\Implementation\PandoraBots\Session The new Session
+     */
+    public function createSession()
+    {
+        return new Session($this);
+    }
 }

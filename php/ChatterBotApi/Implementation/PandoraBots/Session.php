@@ -26,46 +26,46 @@ use ChatterBotApi\ChatterBotThought;
 
 class Session extends AbstractSession
 {
-	/**
-	 * Varibales used for creating the request
-	 * @var array
-	 */
-	private $vars;
+    /**
+     * Varibales used for creating the request
+     * @var array
+     */
+    private $vars;
 
-	/**
-	 * Constructor.
-	 * @param \ChatterBotApi\Implementation\PandoraBots $bot The bot
-	 */
-	public function __construct(PandoraBots $bot)
-	{
-		$this->vars = array();
-		$this->vars['botid']	= $bot->getId();
-		$this->vars['custid']	= uniqid();
-	}
+    /**
+     * Constructor.
+     * @param \ChatterBotApi\Implementation\PandoraBots $bot The bot
+     */
+    public function __construct(PandoraBots $bot)
+    {
+        $this->vars = array();
+        $this->vars['botid']    = $bot->getId();
+        $this->vars['custid']   = uniqid();
+    }
 
-	/**
-	 * Return new thought based on given thought
-	 * @param  \ChatterBotApi\ChatterBotTought $thought The previous thought
-	 * @return \ChatterBotApi\ChatterBotTought          The new thought.
-	 *
-	 * @throws \Exception If response is empty (when input string is empty)
-	 */
-	public function thinkThought(ChatterBotThought $thought)
-	{
-		$this->vars['input'] = $thought->getText();
-		
+    /**
+     * Return new thought based on given thought
+     * @param  \ChatterBotApi\ChatterBotTought $thought The previous thought
+     * @return \ChatterBotApi\ChatterBotTought          The new thought.
+     *
+     * @throws \Exception If response is empty (when input string is empty)
+     */
+    public function thinkThought(ChatterBotThought $thought)
+    {
+        $this->vars['input'] = $thought->getText();
+        
 
-		$response = Utils::post('http://www.pandorabots.com/pandora/talk-xml', $this->vars);
-		
-		$element = new SimpleXMLElement($response);
+        $response = Utils::post('http://www.pandorabots.com/pandora/talk-xml', $this->vars);
+        
+        $element = new SimpleXMLElement($response);
 
-		$result = $element->xpath('//result/that/text()');
+        $result = $element->xpath('//result/that/text()');
 
-		if (isset($result[0][0])) {
-			return ChatterBotThought::make($result[0][0]);
-		} else {
-			throw new Exception('Empty Response');
-			
-		}
-	}
+        if (isset($result[0][0])) {
+            return ChatterBotThought::make($result[0][0]);
+        } else {
+            throw new Exception('Empty Response');
+            
+        }
+    }
 }

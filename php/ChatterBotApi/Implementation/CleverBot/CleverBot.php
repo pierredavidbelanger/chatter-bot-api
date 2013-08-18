@@ -25,45 +25,45 @@ use ChatterBotApi\AbstractBot;
  */
 class CleverBot extends AbstractBot
 {
-	/**
-	 * The url for this chatterbot
-	 * @var string
-	 */
-	private $url;
+    /**
+     * The url for this chatterbot
+     * @var string
+     */
+    private $url;
 
-	/**
-	 * Constructor.
-	 * @param string $url The url for this chatterbot
-	 */
-	public function __construct($url)
-	{
-		$this->url = $url;
-	}
+    /**
+     * Constructor.
+     * @param string $url The url for this chatterbot
+     */
+    public function __construct($url)
+    {
+        $this->url = $url;
+    }
 
-	/**
-	 * Get the url of this chatterbot
-	 * @return string The url
-	 */
-	public function getUrl()
-	{
-		return $this->url;
-	}
+    /**
+     * Get the url of this chatterbot
+     * @return string The url
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
 
-	/**
-	 * Set the url for this chatterbot
-	 * @param string $url The url
-	 */
-	public function setUrl($url)
-	{
-		$this->url = $url;
-	}
+    /**
+     * Set the url for this chatterbot
+     * @param string $url The url
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+    }
 
-	/**
-	 * Create a new Session for this bot
-	 * @return \ChatterBotApi\Implementation\CleverBot\Session The new Session
-	 */
-	public function createSession()
-	{
-		return new Session($this);
-	}
+    /**
+     * Create a new Session for this bot
+     * @return \ChatterBotApi\Implementation\CleverBot\Session The new Session
+     */
+    public function createSession()
+    {
+        return new Session($this);
+    }
 }

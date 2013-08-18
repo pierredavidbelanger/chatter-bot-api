@@ -28,34 +28,34 @@ use ChatterBotApi\Implementation\PandoraBots\PandoraBots;
  */
 class ChatterBotFactory
 {
-	/**
-	 * Create a new a ChatterBot
-	 * @param  int    $type The ChatterBotType (hint: use the ChatterBotType constants)
-	 * @param  string $arg  BotId (only needed when using a PandoraBot)
-	 *
-	 * @return \ChatterBotApi\ChatterBot       The new Bot instance
-	 *
-	 * @throws \Exception When type not recognized or no BotId bassed to the PandoraBot
-	 */
-	public static function create($type, $arg = null)
-	{
-		switch ($type) {
-			case ChatterBotType::CLEVERBOT:
-				return new Cleverbot('http://www.cleverbot.com/webservicemin');
-			
+    /**
+     * Create a new a ChatterBot
+     * @param  int    $type The ChatterBotType (hint: use the ChatterBotType constants)
+     * @param  string $arg  BotId (only needed when using a PandoraBot)
+     *
+     * @return \ChatterBotApi\ChatterBot       The new Bot instance
+     *
+     * @throws \Exception When type not recognized or no BotId bassed to the PandoraBot
+     */
+    public static function create($type, $arg = null)
+    {
+        switch ($type) {
+            case ChatterBotType::CLEVERBOT:
+                return new Cleverbot('http://www.cleverbot.com/webservicemin');
+            
 
-			case ChatterBotType::JABBERWACKY:
-				return new Cleverbot('http://jabberwacky.com/webservicemin');
-			
-			case ChatterBotType::PANDORABOTS:
-				if ($arg == null) {
-					throw new Exception('PANDORABOTS needs a botid arg');
-				}
-			return new PandoraBots($arg);
+            case ChatterBotType::JABBERWACKY:
+                return new Cleverbot('http://jabberwacky.com/webservicemin');
+            
+            case ChatterBotType::PANDORABOTS:
+                if ($arg == null) {
+                    throw new Exception('PANDORABOTS needs a botid arg');
+                }
+            return new PandoraBots($arg);
 
-			default:
-				throw new InvalidArgumentException('Type not recognized');
-				
-		}
-	}
+            default:
+                throw new InvalidArgumentException('Type not recognized');
+                
+        }
+    }
 }

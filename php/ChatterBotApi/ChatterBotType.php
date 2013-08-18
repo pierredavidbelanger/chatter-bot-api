@@ -23,27 +23,27 @@
  */
 class ChatterBotType
 {
-	/**
-	 * CleverBot
-	 * @var int 1
-	 */
-	const CLEVERBOT = 1;
-	
-	/**
-	 * JabberWacky
-	 * @var int 2
-	 */
-	const JABBERWACKY = 2;
-	
-	/**
-	 * PandoraBot
-	 * @var int 3
-	 */
-	const PANDORABOTS = 3;
+    /**
+     * CleverBot
+     * @var int 1
+     */
+    const CLEVERBOT = 1;
+    
+    /**
+     * JabberWacky
+     * @var int 2
+     */
+    const JABBERWACKY = 2;
+    
+    /**
+     * PandoraBot
+     * @var int 3
+     */
+    const PANDORABOTS = 3;
 
-	/**
-	 * A "good" bot ID
-	 * @var string
-	 */
-	const PANDORABOTS_DEFAULT_ID = 'b0dafd24ee35a477';
+    /**
+     * A "good" bot ID
+     * @var string
+     */
+    const PANDORABOTS_DEFAULT_ID = 'b0dafd24ee35a477';
 }

@@ -23,46 +23,46 @@
  */
 class Utils
 {
-	/**
-	 * Post to the given URL
-	 * @param  string $url    The target url
-	 * @param  array  $params The parameters
-	 * @return string         The response
-	 */
-	public static function post($url, $params)
-	{
-		$contextParams = array();
-		$contextParams['http'] = array();
-		$contextParams['http']['method'] = 'POST';
-		$contextParams['http']['content'] = http_build_query($params);
-		$contextParams['http']['header'] = "Content-Type: application/x-www-form-urlencoded\r\n";
-		$context = stream_context_create($contextParams);
-		$fp = @fopen($url, 'rb', false, $context);
-		if (!$fp) {
-			throw new IOException('Connection refused', 0, $url);
-		}
+    /**
+     * Post to the given URL
+     * @param  string $url    The target url
+     * @param  array  $params The parameters
+     * @return string         The response
+     */
+    public static function post($url, $params)
+    {
+        $contextParams = array();
+        $contextParams['http'] = array();
+        $contextParams['http']['method'] = 'POST';
+        $contextParams['http']['content'] = http_build_query($params);
+        $contextParams['http']['header'] = "Content-Type: application/x-www-form-urlencoded\r\n";
+        $context = stream_context_create($contextParams);
+        $fp = @fopen($url, 'rb', false, $context);
+        if (!$fp) {
+            throw new IOException('Connection refused', 0, $url);
+        }
 
-		$response = @stream_get_contents($fp);
+        $response = @stream_get_contents($fp);
 
-		if ($response === false || $response === null) {
-			throw new IOException('Cannot grab data', 0, $url);	
-		}
-		fclose($fp);
-		return $response;
-	}
+        if ($response === false || $response === null) {
+            throw new IOException('Cannot grab data', 0, $url); 
+        }
+        fclose($fp);
+        return $response;
+    }
 
-	/**
-	 * Returns the string at the given index
-	 * @param  array  $strings The strings
-	 * @param  int    $index   The index
-	 * @return string          The string | ''
-	 */
-	public static function stringAtIndex($strings, $index)
-	{
-		if (count($strings) > $index && isset($strings[$index])) {
-			return $strings[$index];
-		} else {
-			return '';
-		}
-	}
+    /**
+     * Returns the string at the given index
+     * @param  array  $strings The strings
+     * @param  int    $index   The index
+     * @return string          The string | ''
+     */
+    public static function stringAtIndex($strings, $index)
+    {
+        if (count($strings) > $index && isset($strings[$index])) {
+            return $strings[$index];
+        } else {
+            return '';
+        }
+    }
 }

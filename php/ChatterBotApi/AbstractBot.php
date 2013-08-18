@@ -23,12 +23,12 @@
  */
 abstract class AbstractBot
 {
-	/**
-	 * Create the session
-	 * @return \ChatterBotApi\ChatterBotSession The new session instance
-	 */
-	public function createSession()
-	{
-		return null;
-	}
+    /**
+     * Create the session
+     * @return \ChatterBotApi\ChatterBotSession The new session instance
+     */
+    public function createSession()
+    {
+        return null;
+    }
 } 

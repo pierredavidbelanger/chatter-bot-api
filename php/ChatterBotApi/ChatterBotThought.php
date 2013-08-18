@@ -23,65 +23,65 @@
  */
 class ChatterBotThought
 {
-	/**
-	 * The associated Text
-	 * @var string
-	 */
-	private $text;
+    /**
+     * The associated Text
+     * @var string
+     */
+    private $text;
 
-	/**
-	 * Factory Method.
-	 * @param  string $text [description]
-	 * @return \ChatterBotApi\ChatterBotThought       The new instance
-	 */
-	public static function make($text = '')
-	{
-		return new static($text);
-	}
+    /**
+     * Factory Method.
+     * @param  string $text [description]
+     * @return \ChatterBotApi\ChatterBotThought       The new instance
+     */
+    public static function make($text = '')
+    {
+        return new static($text);
+    }
 
-	/**
-	 * Contructor.
-	 * @param string $text The text
-	 */
-	public function __construct($text = '')
-	{
-		$this->setText($text);
-	}
+    /**
+     * Contructor.
+     * @param string $text The text
+     */
+    public function __construct($text = '')
+    {
+        $this->setText($text);
+    }
 
-	/**
-	 * Magic Method __toString
-	 * @return string The text
-	 */
-	public function __toString()
-	{
-		return (string) $this->text;
-	}
+    /**
+     * Magic Method __toString
+     * @return string The text
+     */
+    public function __toString()
+    {
+        return (string) $this->text;
+    }
 
-	/**
-	 * Wrapper for getText()
-	 * @uses getText()
-	 * @return string The text
-	 */
-	public function message()
-	{
-		return $this->getText();
-	}
+    /**
+     * Wrapper for getText()
+     * @uses getText()
+     * @return string The text
+     */
+    public function message()
+    {
+        return $this->getText();
+    }
 
-	/**
-	 * Get the text of this thought
-	 * @return string The text
-	 */
-	public function getText()
-	{
-		return $this->text;
-	}
+    /**
+     * Get the text of this thought
+     * @return string The text
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
 
-	/**
-	 * Set the text of this thought
-	 * @param string $text The text
-	 */
-	public function setText($text)
-	{
-		$this->text = $text;
-	}
+    /**
+     * Set the text of this thought
+     * @param string $text The text
+     */
+    public function setText($text)
+    {
+        $this->text = $text;
+    }
 }

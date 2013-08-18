@@ -27,33 +27,33 @@ use Exception;
  */
 class IOException extends Exception
 {
-	private $path;
+    private $path;
 
-	public function __construct($message, $code = 0, $path = null, Exception $previous = null)
-	{
-		if ($path === '' && $path !== null) {
-			$path = '<EMPTY STRING GIVEN>';
-		}
-		$this->path = $path;
-		parent::__construct($message, $code, $previous);
-	}
+    public function __construct($message, $code = 0, $path = null, Exception $previous = null)
+    {
+        if ($path === '' && $path !== null) {
+            $path = '<EMPTY STRING GIVEN>';
+        }
+        $this->path = $path;
+        parent::__construct($message, $code, $previous);
+    }
 
-	/**
-	 * Magic Function. __toString
-	 * @return string The exception message
-	 * @Override
-	 */
-	public function __toString()
-	{
-		return __CLASS__ . ": [{$this->code}]: {$this->message}\nIO path: {$this->path}\n";
-	}
+    /**
+     * Magic Function. __toString
+     * @return string The exception message
+     * @Override
+     */
+    public function __toString()
+    {
+        return __CLASS__ . ": [{$this->code}]: {$this->message}\nIO path: {$this->path}\n";
+    }
 
-	/**
-	 * Returns the path of this IOException
-	 * @return string The path
-	 */
-	public function getPath()
-	{
-		return $this->path;
-	}
+    /**
+     * Returns the path of this IOException
+     * @return string The path
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
 }
