@@ -1,16 +1,16 @@
 # Chatter Bot API
 
-A Mono/.NET, JAVA, Python and PHP chatter bot API that supports Cleverbot, JabberWacky and Pandorabots.
+A Mono/.NET, JAVA, Python and PHP chatter bot API that supports [Cleverbot](http://www.cleverbot.com/), [JabberWacky](http://jabberwacky.com/) and [Pandorabots](http://www.pandorabots.com/).
 
-For a Ruby version, have a look at Gabriele Cirulli cleverbot-api implementation.
+For a Ruby version, have a look at [Gabriele Cirulli cleverbot-api implementation](https://github.com/gabrielecirulli/cleverbot-api).
 
-If you are planing using the .NET version, maybe this fork by Schumix on GitHub is worth looking at.
+If you are planing using the .NET version, maybe [this fork by Schumix](https://github.com/Schumix/ChatterBotApi) is worth looking at.
 
 ## News
 
 **2014-10-11**: Moved to GitHub!
 
-**2014-08-04**: The Java version is now on The Maven Central Repository. This is a request I get from time to time. I was too lazy to do it until now. But this time a user was kind enough, so I kick myself and did it (thanks Hardik!). Just add this dependency to your pom file.
+**2014-08-04**: The Java version is now on The Maven Central Repository. This is a request I get from time to time. I was too lazy to do it until now. But this time a user was kind enough, so I kick myself and did it (thanks Hardik!). [Just add this dependency to your pom file](#Maven).
 
 **2014-03-31**: Cleverbot seems to stops working from time to time. You should expect it to be really unstable until I find a fix.
 
@@ -22,13 +22,12 @@ If you are planing using the .NET version, maybe this fork by Schumix on GitHub 
 
 ## Download
 
-Maven users, you can use this dependency.
-
-I encourage you to download a compiled version of the library, and try the example below in this page. I tried to keep all the libraries free from dependencies, so you do not need to download anything else.
+I encourage you to download a compiled version of the library (*TBA*), and try the example below in this page. I tried to keep all the libraries free from dependencies, so you do not need to download anything else.
 
 Be sure to always use the latest version of the library, as the Cleverbot/JabberWacky Web Service is changing over time. I suppose it is not meant to be public.
 
-Maven
+### Maven
+
 Just add this dependency to your pom file:
 
 ```xml
@@ -41,24 +40,17 @@ Just add this dependency to your pom file:
 
 ## Going further
 
-If you like what you see, browse and comment the source code. If you found a bug or something missing, consult the issue list before posting a new defect or a new enhancement.
-
-Issues you may be interested in
-If you are interested in a PHP version of this library have a look at  issue 3 .
-
-If you are interested in a Ruby version of this library have a look at issue 4, or go to Gabriele Cirulli's implementation.
-
-A discusion about if I should port the Mono/.NET version to .NET Framework 4.0 in  issue 5 .
+If you like what you see, browse and comment the source code. If you found a bug or something missing, consult the [Issues section](https://github.com/pierredavidbelanger/chatter-bot-api/issues) before posting a new defect or a new enhancement. Also I will gladly accept [Pull Requests](https://github.com/pierredavidbelanger/chatter-bot-api/pulls)
 
 ## Disclaimer
 
 I am not the owner of Cleverbot/JabberWacky nor Pandorabots.
 
-My work (the Cleverbot/JabberWacky part) is based on pycleverbot, a Python bindings for the Cleverbot.
+My work (the Cleverbot/JabberWacky part) is based on [pycleverbot](https://code.google.com/p/pycleverbot/), a Python bindings for the Cleverbot.
 
 ## Contact
 
-You can also let me know what you think.
+You can also let [me](https://github.com/pierredavidbelanger) know what you think.
 
 ## Examples
 
