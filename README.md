@@ -31,7 +31,7 @@ Be sure to always use the latest version of the library, as the Cleverbot/Jabber
 Maven
 Just add this dependency to your pom file:
 
-```
+```xml
 <dependency>
     <groupId>ca.pjer</groupId>
     <artifactId>chatter-bot-api</artifactId>
@@ -64,7 +64,7 @@ You can also let me know what you think.
 
 ### Mono/.NET C#
 
-```
+```csharp
 using System;
 
 using ChatterBotAPI;
@@ -99,7 +99,7 @@ namespace ChatterBotAPITest {
 
 ### Mono/.NET VB
 
-```
+```vbnet
 Imports ChatterBotAPI
 
 Public Class Application
@@ -129,7 +129,7 @@ End Class
 
 ### JAVA
 
-```
+```java
 package com.google.code.chatterbotapi.test;
 
 import com.google.code.chatterbotapi.*;
@@ -161,7 +161,7 @@ public class ChatterBotApiTest {
 
 ### Python
 
-```
+```python
 from chatterbotapi import ChatterBotFactory, ChatterBotType
 
 factory = ChatterBotFactory()
@@ -185,7 +185,7 @@ while (1):
 
 ### PHP
 
-```
+```php
 <?php
     require 'chatterbotapi.php';
     
