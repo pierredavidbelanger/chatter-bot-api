@@ -1,8 +1,7 @@
-<?php namespace ChatterBotApi;
-
+<?php
 /*
- * ChatterBotAPI
- * Copyright (C) 2011 pierredavidbelanger@gmail.com
+ * ChatterBotAPI Tests
+ * Copyright (C) 2013 christiangaertner.film@googlemail.com
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,32 +17,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/** 
- * A ChatterBot thought
- */
-class ChatterBotThought
-{
-	/**
-	 * The associated Text
-	 * @var string
-	 */
-	private $text;
+use ChatterBotApi\ChatterBotType;
 
-	/**
-	 * Get the text of this thought
-	 * @return string The text
-	 */
-	public function getText()
+/**
+* PHPUnit Test
+*/
+class ChatterBotTypeTest extends PHPUnit_Framework_TestCase
+{
+	public function testCleverbot()
 	{
-		return $this->text;
+		$this->assertEquals(1, ChatterBotType::CLEVERBOT);
 	}
 
-	/**
-	 * Set the text of this thought
-	 * @param string $text The text
-	 */
-	public function setText($text)
+	public function testJabberWacky()
 	{
-		$this->text = $text;
+		$this->assertEquals(2, ChatterBotType::JABBERWACKY);
+	}
+
+	public function testPandoraBots()
+	{
+		$this->assertEquals(3, ChatterBotType::PANDORABOTS);
+	}
+
+	public function testPandoraBotsID()
+	{
+		$this->assertEquals('b0dafd24ee35a477', ChatterBotType::PANDORABOTS_DEFAULT_ID);
 	}
 }

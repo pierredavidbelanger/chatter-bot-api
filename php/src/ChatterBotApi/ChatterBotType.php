@@ -19,30 +19,31 @@
  */
 
 /**
- * Abstract for all ChatterBot Sessions
+ * The ChatterBot type
  */
-abstract class ChatterBotSession
+class ChatterBotType
 {
-	/**
-	 * Return new thought based on given thought
-	 * @param  \ChatterBotApi\ChatterBotThought $thought The previous thought
-	 * @return \ChatterBotApi\ChatterBotThought          The new thought.
-	 */
-	public function thinkThought(ChatterBotThought $thought)
-	{
-		return $thought;
-	}
+    /**
+     * CleverBot
+     * @var int 1
+     */
+    const CLEVERBOT = 1;
+    
+    /**
+     * JabberWacky
+     * @var int 2
+     */
+    const JABBERWACKY = 2;
+    
+    /**
+     * PandoraBot
+     * @var int 3
+     */
+    const PANDORABOTS = 3;
 
-	/**
-	 * Return a new thought based on given string
-	 * @param  string $text The text
-	 * 
-	 * @return \ChatterBotApi\ChatterBotThought    The new thought.
-	 */
-	public function think($text)
-	{
-		$thought = new ChatterBotThought();
-		$thought->setText($text);
-		return $this->thinkThought($thought)->getText();
-	}
+    /**
+     * A "good" bot ID
+     * @var string
+     */
+    const PANDORABOTS_DEFAULT_ID = 'b0dafd24ee35a477';
 }

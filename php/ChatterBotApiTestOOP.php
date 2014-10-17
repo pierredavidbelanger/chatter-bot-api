@@ -19,28 +19,44 @@
     
     /**
      * This tests were written by:
-     * Christian Gaertner <christiangaertner.film@googlemail.com>
+     * Christian Gärtner <christiangaertner.film@googlemail.com>
      */
      
 require 'vendor/autoload.php';
 
-use ChatterBotApi\ChatterBotFactory;
-use ChatterBotApi\ChatterBotType;
 
+use ChatterBotApi\ChatterBotType;
+use ChatterBotApi\ChatterBotThought;
+use ChatterBotApi\ChatterBotFactory;
 
 $bot1 = ChatterBotFactory::create(ChatterBotType::CLEVERBOT);
 $bot1session = $bot1->createSession();
 
-$bot2 = ChatterBotFactory::create(ChatterBotType::PANDORABOTS, 'b0dafd24ee35a477');
+$bot2 = ChatterBotFactory::create(ChatterBotType::PANDORABOTS, ChatterBotType::PANDORABOTS_DEFAULT_ID);
 $bot2session = $bot2->createSession();
 
-$s = 'Hi';
-while (1) 
+$th = ChatterBotThought::make('Hi');
+
+while (1)
 {
-    echo "bot1> $s\n";
+    echo "bot1> $th\n";
+
+    try {
+        $th = $bot2session->think($th->message());
+    } catch (IOException $e) {
+        echo $e;
+    } catch (Exception $e) {
+        // Ignore these
+    }
+
+    echo "bot2> $th\n";
+
+    try {
+        $th = $bot1session->think($th->message());
+    } catch (IOException $e) {
+        echo $e;
+    } catch (Exception $e) {
+        // Ignore these
+    }
     
-    $s = $bot2session->think($s);
-    echo "bot2> $s\n";
-    
-    $s = $bot1session->think($s);
 }

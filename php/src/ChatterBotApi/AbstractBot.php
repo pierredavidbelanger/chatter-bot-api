@@ -19,25 +19,16 @@
  */
 
 /**
- * The ChatterBot type
+ * Abstract for all ChatterBots
  */
-class ChatterBotType
+abstract class AbstractBot
 {
-	/**
-	 * CleverBot
-	 * @var int 1
-	 */
-	const CLEVERBOT = 1;
-	
-	/**
-	 * JabberWacky
-	 * @var int 2
-	 */
-	const JABBERWACKY = 2;
-	
-	/**
-	 * PandoraBot
-	 * @var int 3
-	 */
-	const PANDORABOTS = 3;
-}
+    /**
+     * Create the session
+     * @return \ChatterBotApi\ChatterBotSession The new session instance
+     */
+    public function createSession()
+    {
+        return null;
+    }
+} 
