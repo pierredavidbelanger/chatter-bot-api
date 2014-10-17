@@ -10,7 +10,7 @@ If you are planing using the .NET version, maybe [this fork by Schumix](https://
 
 **2014-10-11**: Moved to GitHub!
 
-**2014-08-04**: The Java version is now on The Maven Central Repository. This is a request I get from time to time. I was too lazy to do it until now. But this time a user was kind enough, so I kick myself and did it (thanks Hardik!). [Just add this dependency to your pom file](#Maven).
+**2014-08-04**: The Java version is now on The Maven Central Repository. This is a request I get from time to time. I was too lazy to do it until now. But this time a user was kind enough, so I kick myself and did it (thanks Hardik!). [Just add this dependency to your pom file](#maven).
 
 **2014-03-31**: Cleverbot seems to stops working from time to time. You should expect it to be really unstable until I find a fix.
 
