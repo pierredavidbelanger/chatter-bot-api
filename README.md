@@ -8,6 +8,8 @@ If you are planing using the .NET version, maybe [this fork by Schumix](https://
 
 ## News
 
+**2014-10-17**: Merged a bunch of nicely arranged pull requests sent by [Csaba Jakosa](https://github.com/megax). Those include works done by [Christian Gärtner](https://github.com/ChristianGaertner) (for the PHP version), and [Arnaud Aliès](https://github.com/mouuff) (for the Python version).
+
 **2014-10-11**: Moved to GitHub!
 
 **2014-08-04**: The Java version is now on The Maven Central Repository. This is a request I get from time to time. I was too lazy to do it until now. But this time a user was kind enough, so I kick myself and did it (thanks Hardik!). [Just add this dependency to your pom file](#maven).
