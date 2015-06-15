@@ -156,7 +156,16 @@
             $dataToDigest = substr($data, 9, $this->bot->getEndIndex());
             $dataDigest = md5($dataToDigest);
             $this->vars['icognocheck'] = $dataDigest;
-            $response = _utils_post($this->bot->getUrl(), $this->vars);
+            file_get_contents("http://www.cleverbot.com");
+	        foreach($http_response_header as $counter=>$s)
+	        {
+	        	if(preg_match('@Set-Cookie: (([^=]+)=[^;]+)@i', $http_response_header["$counter"], $matches))
+		        {
+	    		    $cookie = split("=", $matches[1])[1];
+		    	break;
+		        }
+	        }
+            $response = _utils_post($this->bot->getUrl(), $this->vars, $cookie);
             $responseValues = explode("\r", $response);
             //self.vars['??'] = _utils_string_at_index($responseValues, 0);
             $this->vars['sessionid'] = _utils_string_at_index($responseValues, 1);
@@ -244,13 +253,16 @@
     # Utils
     #################################################
 
-    function _utils_post($url, $params)
+
+    function _utils_post($url, $params, $cookie = "none")
     {
         $contextParams = array();
         $contextParams['http'] = array();
         $contextParams['http']['method'] = 'POST';
         $contextParams['http']['content'] = http_build_query($params);
         $contextParams['http']['header'] = "Content-type: application/x-www-form-urlencoded";
+	    $contextParams['http']['header'] .= "Accept-language: en\r\n" .
+              					            "Cookie: XVIS=".$cookie."\r\n";
         $context = stream_context_create($contextParams);
         $fp = fopen($url, 'rb', false, $context);
         $response = stream_get_contents($fp);
