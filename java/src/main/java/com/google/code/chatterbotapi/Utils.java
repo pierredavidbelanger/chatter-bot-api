@@ -1,24 +1,22 @@
 package com.google.code.chatterbotapi;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.math.BigInteger;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
-import java.security.MessageDigest;
-import java.util.Map;
+import org.w3c.dom.Document;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
-import org.w3c.dom.Document;
+import java.io.*;
+import java.math.BigInteger;
+import java.net.HttpCookie;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.security.MessageDigest;
+import java.util.List;
+import java.util.Map;
 
 /*
     chatter-bot-api
@@ -58,16 +56,39 @@ class Utils {
         BigInteger hash = new BigInteger(1, md5.digest());
         return String.format("%1$032X", hash);
     }
-    
-    public static String post(String url, Map<String, String> parameters) throws Exception {
-        URLConnection connection = new URL(url).openConnection();
+
+    public static String request(String url, Map<String, String> cookies, Map<String, String> parameters) throws Exception {
+        HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
         connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.95 Safari/537.36");
-        connection.setDoOutput(true);
+        if (cookies != null && !cookies.isEmpty()) {
+            StringBuilder cookieHeader = new StringBuilder();
+            for (String cookie : cookies.values()) {
+                if (cookieHeader.length() > 0) {
+                    cookieHeader.append(";");
+                }
+                cookieHeader.append(cookie);
+            }
+            connection.setRequestProperty("Cookie", cookieHeader.toString());
+        }
         connection.setDoInput(true);
-        OutputStreamWriter osw = new OutputStreamWriter(connection.getOutputStream());
-        osw.write(parametersToWWWFormURLEncoded(parameters));
-        osw.flush();
-        osw.close();
+        if (parameters != null && !parameters.isEmpty()) {
+            connection.setDoOutput(true);
+            OutputStreamWriter osw = new OutputStreamWriter(connection.getOutputStream());
+            osw.write(parametersToWWWFormURLEncoded(parameters));
+            osw.flush();
+            osw.close();
+        }
+        if (cookies != null) {
+            for (Map.Entry<String, List<String>> headerEntry : connection.getHeaderFields().entrySet()) {
+                if (headerEntry != null && headerEntry.getKey() != null && headerEntry.getKey().equalsIgnoreCase("Set-Cookie")) {
+                    for (String header : headerEntry.getValue()) {
+                        for (HttpCookie httpCookie : HttpCookie.parse(header)) {
+                            cookies.put(httpCookie.getName(), httpCookie.toString());
+                        }
+                    }
+                }
+            }
+        }
         Reader r = new BufferedReader(new InputStreamReader(connection.getInputStream()));
         StringWriter w = new StringWriter();
         char[] buffer = new char[1024];

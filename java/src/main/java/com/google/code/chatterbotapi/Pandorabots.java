@@ -28,7 +28,6 @@ class Pandorabots implements ChatterBot {
         this.botid = botid;
     }
 
-    @Override
     public ChatterBotSession createSession() {
         return new Session();
     }
@@ -42,11 +41,10 @@ class Pandorabots implements ChatterBot {
             vars.put("custid", UUID.randomUUID().toString());
         }
 
-        @Override
         public ChatterBotThought think(ChatterBotThought thought) throws Exception {
             vars.put("input", thought.getText());
 
-            String response = Utils.post("http://www.pandorabots.com/pandora/talk-xml", vars);
+            String response = Utils.request("http://www.pandorabots.com/pandora/talk-xml", null, vars);
 
             ChatterBotThought responseThought = new ChatterBotThought();
 
@@ -55,7 +53,6 @@ class Pandorabots implements ChatterBot {
             return responseThought;
         }
 
-        @Override
         public String think(String text) throws Exception {
             ChatterBotThought thought = new ChatterBotThought();
             thought.setText(text);
