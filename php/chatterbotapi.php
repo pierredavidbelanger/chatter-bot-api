@@ -36,11 +36,11 @@
             {
                 case ChatterBotType::CLEVERBOT:
                 {
-                    return new _Cleverbot('http://www.cleverbot.com/webservicemin', 26);
+                    return new _Cleverbot('http://www.cleverbot.com', 'http://www.cleverbot.com/webservicemin', 26);
                 }
                 case ChatterBotType::JABBERWACKY:
                 {
-                    return new _Cleverbot('http://jabberwacky.com/webservicemin', 20);
+                    return new _Cleverbot('http://jabberwacky.com', 'http://jabberwacky.com/webservicemin', 20);
                 }
                 case ChatterBotType::PANDORABOTS:
                 {
@@ -97,24 +97,26 @@
     
     class _Cleverbot extends ChatterBot
     {
-        private $url;
+        private $baseUrl;
+        private $serviceUrl;
         private $endIndex;
         
-        public function __construct($url, $endIndex)
+        public function __construct($baseUrl, $serviceUrl, $endIndex)
         {
-            $this->url = $url;
+            $this->baseUrl = $baseUrl;
+            $this->serviceUrl = $serviceUrl;
             $this->endIndex = $endIndex;
         }
         
-        public function getUrl()
+        public function getBaseUrl()
         {
-            return $this->url;
+            return $this->baseUrl;
         }
         
-        public function setUrl($url)
+        public function getServiceUrl()
         {
-            $this->url = $url;
-        }        
+            return $this->serviceUrl;
+        }
 
         public function getEndIndex()
         {
@@ -135,6 +137,7 @@
     class _CleverbotSession extends ChatterBotSession
     {
         private $bot;
+        private $cookies;
         private $vars;
 
         public function __construct($bot)
@@ -147,6 +150,8 @@
             $this->vars['sub'] = 'Say';
             $this->vars['islearning'] = '1';
             $this->vars['cleanslate'] = 'false';
+            $this->cookies = array();
+            _utils_request($this->bot->getBaseUrl(), $this->cookies, null);
         }
 
         public function thinkThought($thought)
@@ -156,7 +161,7 @@
             $dataToDigest = substr($data, 9, $this->bot->getEndIndex());
             $dataDigest = md5($dataToDigest);
             $this->vars['icognocheck'] = $dataDigest;
-            $response = _utils_post($this->bot->getUrl(), $this->vars);
+            $response = _utils_request($this->bot->getServiceUrl(), $this->cookies, $this->vars);
             $responseValues = explode("\r", $response);
             //self.vars['??'] = _utils_string_at_index($responseValues, 0);
             $this->vars['sessionid'] = _utils_string_at_index($responseValues, 1);
@@ -231,11 +236,19 @@
         public function thinkThought($thought)
         {
             $this->vars['input'] = $thought->getText();
-            $response = _utils_post('http://www.pandorabots.com/pandora/talk-xml', $this->vars);
+            $dummy = NULL;
+            $response = _utils_request('http://www.pandorabots.com/pandora/talk-xml', $dummy, $this->vars);
             $element = new SimpleXMLElement($response);
             $result = $element->xpath('//result/that/text()');
             $responseThought = new ChatterBotThought();
-            $responseThought->setText(trim($result[0][0]));
+            if (isset($result[0][0]))
+            {
+                $responseThought->setText(trim($result[0][0]));
+            }
+            else
+            {
+                $responseThought->setText("");
+            }
             return $responseThought;
         }
     }
@@ -244,16 +257,50 @@
     # Utils
     #################################################
 
-    function _utils_post($url, $params)
+    function _utils_request($url, &$cookies, $params)
     {
         $contextParams = array();
         $contextParams['http'] = array();
-        $contextParams['http']['method'] = 'POST';
-        $contextParams['http']['content'] = http_build_query($params);
-        $contextParams['http']['header'] = "Content-type: application/x-www-form-urlencoded";
+        if ($params)
+        {
+            $contextParams['http']['method'] = 'POST';
+            $contextParams['http']['content'] = http_build_query($params);
+            $contextParams['http']['header'] = "Content-type: application/x-www-form-urlencoded\r\n";
+        }
+        else
+        {
+            $contextParams['http']['method'] = 'GET';
+        }
+        if (!is_null($cookies) && count($cookies) > 0)
+        {
+            $cookieHeader = "Cookie: ";
+            foreach ($cookies as $cookieName => $cookie)
+            {
+                $cookieHeader .= $cookie . ";";
+            }
+            $cookieHeader .= "\r\n";
+            if (isset($contextParams['http']['header']))
+            {
+                $contextParams['http']['header'] .= $cookieHeader;
+            }
+            else
+            {
+                $contextParams['http']['header'] = $cookieHeader;
+            }
+        }
         $context = stream_context_create($contextParams);
         $fp = fopen($url, 'rb', false, $context);
         $response = stream_get_contents($fp);
+        if (!is_null($cookies))
+        {
+            foreach ($http_response_header as $header)
+            {
+                if (preg_match('@Set-Cookie: (([^=]+)=[^;]+)@i', $header, $matches))
+                {
+                    $cookies[$matches[2]] = $matches[1];
+                }
+            }
+        }
         fclose($fp);
         return $response;
     }
