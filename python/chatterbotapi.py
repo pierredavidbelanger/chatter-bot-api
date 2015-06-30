@@ -1,6 +1,7 @@
 import hashlib
 import urllib
 import urllib2
+import cookielib
 import uuid
 import xml.dom.minidom
 
@@ -36,9 +37,9 @@ class ChatterBotFactory:
 
     def create(self, type, arg = None):
         if type == ChatterBotType.CLEVERBOT:
-            return _Cleverbot('http://www.cleverbot.com/webservicemin', 35)
+            return _Cleverbot('http://www.cleverbot.com', 'http://www.cleverbot.com/webservicemin', 35)
         elif type == ChatterBotType.JABBERWACKY:
-            return _Cleverbot('http://jabberwacky.com/webservicemin', 29)
+            return _Cleverbot('http://jabberwacky.com', 'http://jabberwacky.com/webservicemin', 29)
         elif type == ChatterBotType.PANDORABOTS:
             if arg == None:
                 raise Exception('PANDORABOTS needs a botid arg')
@@ -70,8 +71,9 @@ class ChatterBotThought:
 
 class _Cleverbot(ChatterBot):
 
-    def __init__(self, url, endIndex):
-        self.url = url
+    def __init__(self, baseUrl, serviceUrl, endIndex):
+        self.baseUrl = baseUrl
+        self.serviceUrl = serviceUrl
         self.endIndex = endIndex
 
     def create_session(self):
@@ -88,6 +90,9 @@ class _CleverbotSession(ChatterBotSession):
         self.vars['sub'] = 'Say'
         self.vars['islearning'] = '1'
         self.vars['cleanslate'] = 'false'
+        self.cookieJar = cookielib.CookieJar()
+        self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self.cookieJar))
+        self.opener.open(self.bot.baseUrl)
 
     def think_thought(self, thought):
         self.vars['stimulus'] = thought.text
@@ -95,7 +100,7 @@ class _CleverbotSession(ChatterBotSession):
         data_to_digest = data[9:self.bot.endIndex]
         data_digest = hashlib.md5(data_to_digest).hexdigest()
         data = data + '&icognocheck=' + data_digest
-        url_response = urllib2.urlopen(self.bot.url, data)
+        url_response = self.opener.open(self.bot.serviceUrl, data)
         response = url_response.read()
         response_values = response.split('\r')
         #self.vars['??'] = _utils_string_at_index(response_values, 0)
