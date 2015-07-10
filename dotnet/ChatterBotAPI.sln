@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatterBotAPI", "ChatterBotAPI\ChatterBotAPI.csproj", "{2E624962-F155-432C-A90A-E1CE75DEE9EA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatterBotAPITest", "ChatterBotAPITest\ChatterBotAPITest.csproj", "{DA59F247-C17B-4A92-BB03-CB458C6916F0}"
@@ -17,14 +19,17 @@ Global
 		{2E624962-F155-432C-A90A-E1CE75DEE9EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E624962-F155-432C-A90A-E1CE75DEE9EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E624962-F155-432C-A90A-E1CE75DEE9EA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4D5C5614-9C76-4464-AB6E-A4349784F123}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4D5C5614-9C76-4464-AB6E-A4349784F123}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4D5C5614-9C76-4464-AB6E-A4349784F123}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4D5C5614-9C76-4464-AB6E-A4349784F123}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DA59F247-C17B-4A92-BB03-CB458C6916F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DA59F247-C17B-4A92-BB03-CB458C6916F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA59F247-C17B-4A92-BB03-CB458C6916F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA59F247-C17B-4A92-BB03-CB458C6916F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D5C5614-9C76-4464-AB6E-A4349784F123}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D5C5614-9C76-4464-AB6E-A4349784F123}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D5C5614-9C76-4464-AB6E-A4349784F123}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D5C5614-9C76-4464-AB6E-A4349784F123}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = ChatterBotAPITestVB\ChatterBotAPITestVB.vbproj
