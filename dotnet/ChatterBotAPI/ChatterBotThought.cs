@@ -1,6 +1,4 @@
-using System;
-
-/*
+ /*
     ChatterBotAPI
     Copyright (C) 2011 pierredavidbelanger@gmail.com
  
@@ -17,12 +15,12 @@ using System;
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-namespace ChatterBotAPI {
-	
-	public class ChatterBotThought {
-		
-		public string[] Emotions { get; set; }
-		
-		public string Text { get; set; }
-	}
+
+namespace ChatterBotAPI
+{
+    public class ChatterBotThought
+    {
+        public string[] Emotions { get; set; }
+        public string Text { get; set; }
+    }
 }

@@ -1,5 +1,4 @@
 using System.Reflection;
-using System.Runtime.CompilerServices;
 
 /*
     ChatterBotAPI
@@ -27,5 +26,4 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyCopyright("pierredavidbelanger")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-
 [assembly: AssemblyVersion("1.1.*")]
