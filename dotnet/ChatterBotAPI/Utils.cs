@@ -1,11 +1,7 @@
-using System;
-
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
-using System.Web;
-using System.Web.Security;
 using System.Xml.XPath;
 
 /*
@@ -25,55 +21,100 @@ using System.Xml.XPath;
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-namespace ChatterBotAPI {
-	
-	static class Utils {
-		
-		public static string ParametersToWWWFormURLEncoded(IDictionary<string, string> parameters) {
-			string wwwFormUrlEncoded = null;
-			foreach (string parameterKey in parameters.Keys) {
-				string parameterValue = parameters[parameterKey];
-				string parameter = string.Format("{0}={1}", HttpUtility.UrlEncode(parameterKey), HttpUtility.UrlEncode(parameterValue));
-				if (wwwFormUrlEncoded == null) {
-					wwwFormUrlEncoded = parameter;
-				} else {
-					wwwFormUrlEncoded = string.Format("{0}&{1}", wwwFormUrlEncoded, parameter);
-				}
-			}
-			return wwwFormUrlEncoded;
-		}
-		
-		public static string MD5(string input) {
-			return FormsAuthentication.HashPasswordForStoringInConfigFile(input, "MD5");
-		}
-		
-		public static string Post(string url, IDictionary<string, string> parameters) {
-			string postData = ParametersToWWWFormURLEncoded(parameters);
-			byte[] postDataBytes = Encoding.ASCII.GetBytes(postData);
-			
-			WebRequest webRequest = WebRequest.Create(url);
-			webRequest.Method = "POST";
-			webRequest.ContentType = "application/x-www-form-urlencoded";
-			webRequest.ContentLength = postDataBytes.Length;
-			
-			Stream outputStream = webRequest.GetRequestStream();
-			outputStream.Write(postDataBytes, 0, postDataBytes.Length);
-			outputStream.Close();
-			
-			WebResponse webResponse = webRequest.GetResponse();
-			StreamReader responseStreamReader = new StreamReader(webResponse.GetResponseStream());
-			return responseStreamReader.ReadToEnd().Trim();
-		}
-		
-		public static string XPathSearch(string input, string expression) {
-			XPathDocument document = new XPathDocument(new MemoryStream(Encoding.ASCII.GetBytes(input)));
-			XPathNavigator navigator = document.CreateNavigator();
-			return navigator.SelectSingleNode(expression).Value.Trim();
-		}
-		
-		public static string StringAtIndex(string[] strings, int index) {
-			if (index >= strings.Length) return "";
-			return strings[index];
-		}
-	}
+
+namespace ChatterBotAPI
+{
+    internal static class Utils
+    {
+        public static string ParametersToWWWFormURLEncoded(IDictionary<string, string> parameters)
+        {
+            string wwwFormUrlEncoded = null;
+            foreach (var parameterKey in parameters.Keys)
+            {
+                var parameterValue = parameters[parameterKey];
+                var parameter = string.Format("{0}={1}", System.Uri.EscapeDataString(parameterKey), System.Uri.EscapeDataString(parameterValue)); 
+                if (wwwFormUrlEncoded == null)
+                {
+                    wwwFormUrlEncoded = parameter;
+                }
+                else
+                {
+                    wwwFormUrlEncoded = string.Format("{0}&{1}", wwwFormUrlEncoded, parameter);
+                }
+            }
+            return wwwFormUrlEncoded;
+        }
+
+        public static string MD5(string input)
+        {
+            // step 1, calculate MD5 hash from input
+            var md5 = System.Security.Cryptography.MD5.Create();
+            var inputBytes = Encoding.ASCII.GetBytes(input);
+            var hash = md5.ComputeHash(inputBytes);
+
+            // step 2, convert byte array to hex string
+            var sb = new StringBuilder();
+            for (var i = 0; i < hash.Length; i++)
+            {
+                sb.Append(hash[i].ToString("X2"));
+            }
+            return sb.ToString();
+        
+        }
+
+        public static CookieCollection GetCookies(string url)
+        {
+            CookieContainer container = new CookieContainer();
+            var request = (HttpWebRequest)WebRequest.Create(url);
+            request.Method = "GET";
+            request.Headers.Add("UserAgent", "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:28.0) Gecko/20100101 Firefox/28.0;");
+            request.ContentType = "text/html";
+            request.CookieContainer = container;
+
+            request.GetResponse();
+
+            return container.GetCookies(request.RequestUri);
+        }
+
+        public static string Post(string url, IDictionary<string, string> parameters, CookieCollection cookies)
+        {
+            var postData = ParametersToWWWFormURLEncoded(parameters);
+            var postDataBytes = Encoding.ASCII.GetBytes(postData);
+
+            var request = (HttpWebRequest)WebRequest.Create(url);
+
+            if (cookies != null)
+            {
+                var container = new CookieContainer();
+                container.Add(cookies);
+                request.CookieContainer = container;
+            }
+
+            
+            request.Method = "POST";
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.ContentLength = postDataBytes.Length;
+
+            var outputStream = request.GetRequestStream();
+            outputStream.Write(postDataBytes, 0, postDataBytes.Length);
+            outputStream.Close();
+
+            var response = (HttpWebResponse)request.GetResponse();
+            var responseStreamReader = new StreamReader(response.GetResponseStream());
+            return responseStreamReader.ReadToEnd().Trim();
+        }
+
+        public static string XPathSearch(string input, string expression)
+        {
+            var document = new XPathDocument(new MemoryStream(Encoding.ASCII.GetBytes(input)));
+            var navigator = document.CreateNavigator();
+            return navigator.SelectSingleNode(expression).Value.Trim();
+        }
+
+        public static string StringAtIndex(string[] strings, int index)
+        {
+            if (index >= strings.Length) return "";
+            return strings[index];
+        }
+    }
 }
