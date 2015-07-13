@@ -20,28 +20,28 @@ using ChatterBotAPI;
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 namespace ChatterBotAPITest {
-    
-    class MainClass {
-        
-        public static void Main(string[] args) {
-            ChatterBotFactory factory = new ChatterBotFactory();
-
-            ChatterBot bot1 = factory.Create(ChatterBotType.CLEVERBOT);
-            ChatterBotSession bot1session = bot1.CreateSession();
-
-            ChatterBot bot2 = factory.Create(ChatterBotType.CLEVERBOT, "b0dafd24ee35a477");
-            ChatterBotSession bot2session = bot2.CreateSession();
-            
-            string s = "Hi";
-            while (true) {
-                
-                Console.WriteLine("bot1> " + s);
-                
-                s = bot2session.Think(s);
-                Console.WriteLine("bot2> " + s);
-                
-                s = bot1session.Think(s);
-            }
-        }
-    }
+	
+	class MainClass {
+		
+		public static void Main(string[] args) {
+			ChatterBotFactory factory = new ChatterBotFactory();
+			
+			ChatterBot bot1 = factory.Create(ChatterBotType.CLEVERBOT);
+			ChatterBotSession bot1session = bot1.CreateSession();
+			
+			ChatterBot bot2 = factory.Create(ChatterBotType.PANDORABOTS, "b0dafd24ee35a477");
+			ChatterBotSession bot2session = bot2.CreateSession();
+			
+			string s = "Hi";
+			while (true) {
+				
+				Console.WriteLine("bot1> " + s);
+				
+				s = bot2session.Think(s);
+				Console.WriteLine("bot2> " + s);
+				
+				s = bot1session.Think(s);
+			}
+		}
+	}
 }

@@ -1,6 +1,6 @@
 using System;
+
 using System.Collections.Generic;
-using System.Net.Http;
 
 /*
     ChatterBotAPI
@@ -19,52 +19,42 @@ using System.Net.Http;
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-
-namespace ChatterBotAPI
-{
-    internal class Pandorabots : ChatterBot
-    {
-        private readonly string botid;
-
-        public Pandorabots(string botid)
-        {
-            this.botid = botid;
-        }
-
-        public ChatterBotSession CreateSession()
-        {
-            return new PandorabotsSession(botid);
-        }
-    }
-
-    internal class PandorabotsSession : ChatterBotSession
-    {
-        private readonly IDictionary<string, string> vars;
-        private readonly HttpClient client;
-
-        public PandorabotsSession(string botid)
-        {
-            vars = new Dictionary<string, string>();
-            vars["botid"] = botid;
-            vars["custid"] = Guid.NewGuid().ToString();
-            client = Utils.GetHttpClient(String.Empty);
-        }
-
-        public ChatterBotThought Think(ChatterBotThought thought)
-        {
-            vars["input"] = thought.Text;
-
-            var response = Utils.Post(client, "http://www.pandorabots.com/pandora/talk-xml", vars);
-
-            var responseThought = new ChatterBotThought();
-            responseThought.Text = Utils.XPathSearch(response, "//result/that/text()");
-
-            return responseThought;
-        }
-
-        public string Think(string text)
-        {
-            return Think(new ChatterBotThought {Text = text}).Text;
-        }
-    }
+namespace ChatterBotAPI {
+	
+	class Pandorabots: ChatterBot {
+		private readonly string botid;
+		
+		public Pandorabots(string botid) {
+			this.botid = botid;
+		}
+		
+		public ChatterBotSession CreateSession() {
+			return new PandorabotsSession(botid);
+		}
+	}
+	
+	class PandorabotsSession: ChatterBotSession {
+		private readonly IDictionary<string, string> vars;
+		
+		public PandorabotsSession(string botid) {
+			vars = new Dictionary<string, string>();
+			vars["botid"] = botid;
+			vars["custid"] = Guid.NewGuid().ToString();
+		}
+		
+		public ChatterBotThought Think(ChatterBotThought thought) {
+			vars["input"] = thought.Text;
+			
+			string response = Utils.Post("http://www.pandorabots.com/pandora/talk-xml", vars);
+			
+			ChatterBotThought responseThought = new ChatterBotThought();
+			responseThought.Text = Utils.XPathSearch(response, "//result/that/text()");
+			
+			return responseThought;
+		}
+		
+		public string Think(string text) {
+			return Think(new ChatterBotThought() { Text = text }).Text;
+		}
+	}
 }
