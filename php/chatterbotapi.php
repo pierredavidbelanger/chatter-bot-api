@@ -188,7 +188,21 @@
             $this->vars['typingData'] = _utils_string_at_index($responseValues, 22);
             $this->vars['divert'] = _utils_string_at_index($responseValues, 23);
             $responseThought = new ChatterBotThought();
-            $responseThought->setText(_utils_string_at_index($responseValues, 16));
+            $text = _utils_string_at_index($responseValues, 16);
+            if (!is_null($text))
+            {
+                $text = preg_replace_callback(
+                    '/\|([01234567890ABCDEF]{4})/', 
+                    function ($matches) { 
+                        return iconv('UCS-4LE', 'UTF-8', pack('V', hexdec($matches[0]))); 
+                    }, 
+                    $text);
+            } 
+            else
+            {
+                $text = '';
+            }
+            $responseThought->setText($text);
             return $responseThought;
         }
     }
