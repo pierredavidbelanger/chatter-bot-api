@@ -43,13 +43,12 @@ namespace ChatterBotAPI
     internal class CleverbotSession : ChatterBotSession
     {
         private readonly int endIndex;
-        private readonly string baseUrl;
         private readonly string url;
         private readonly IDictionary<string, string> vars;
+		private readonly CookieCollection cookies;
 
         public CleverbotSession(string baseUrl, string url, int endIndex)
         {
-            this.baseUrl = baseUrl;
             this.url = url;
             this.endIndex = endIndex;
             vars = new Dictionary<string, string>();
@@ -59,6 +58,7 @@ namespace ChatterBotAPI
             vars["sub"] = "Say";
             vars["islearning"] = "1";
             vars["cleanslate"] = "false";
+			cookies = Utils.GetCookies(baseUrl);
         }
 
         public ChatterBotThought Think(ChatterBotThought thought)
@@ -70,8 +70,6 @@ namespace ChatterBotAPI
             var formDataDigest = Utils.MD5(formDataToDigest);
             vars["icognocheck"] = formDataDigest;
 
-            var cookies = Utils.GetCookies(baseUrl);
-            
             var response = Utils.Post(url, vars, cookies);
 
             var responseValues = response.Split('\r');
