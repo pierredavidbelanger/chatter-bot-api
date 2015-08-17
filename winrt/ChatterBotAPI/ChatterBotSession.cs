@@ -1,4 +1,7 @@
- /*
+using System;
+using System.Threading.Tasks;
+
+/*
     ChatterBotAPI
     Copyright (C) 2011 pierredavidbelanger@gmail.com
  
@@ -15,12 +18,12 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+namespace ChatterBotAPI {
+	
+	public interface ChatterBotSession {
+		
+		Task<ChatterBotThought> Think(ChatterBotThought thought);
 
-namespace ChatterBotAPI
-{
-    public interface ChatterBotSession
-    {
-        ChatterBotThought Think(ChatterBotThought thought);
-        string Think(string text);
-    }
+		Task<string> Think(string text);
+	}
 }
