@@ -1,3 +1,9 @@
+# Chatter Bot WinRT API
+
+This is a fork of the chatter-bot-api by [Pierre David Belanger](https://github.com/pierredavidbelanger/chatter-bot-api), created to support the Windows Runtime and the UWP platforms for using in Windows store applications.
+
+** Original README: **
+
 # Chatter Bot API
 
 A Mono/.NET, JAVA, Python and PHP chatter bot API that supports [Cleverbot](http://www.cleverbot.com/), [JabberWacky](http://jabberwacky.com/) and [Pandorabots](http://www.pandorabots.com/).
