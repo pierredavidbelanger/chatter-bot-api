@@ -1,4 +1,5 @@
-using System.Reflection;
+using System;
+using System.Threading.Tasks;
 
 /*
     ChatterBotAPI
@@ -17,13 +18,12 @@ using System.Reflection;
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+namespace ChatterBotAPI {
+	
+	public interface ChatterBotSession {
+		
+		Task<ChatterBotThought> Think(ChatterBotThought thought);
 
-[assembly: AssemblyTitle("ChatterBotAPI")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("pierredavidbelanger")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
-[assembly: AssemblyVersion("1.1.*")]
+		Task<string> Think(string text);
+	}
+}

@@ -1,7 +1,7 @@
-package com.google.code.chatterbotapi;
+using System;
 
 /*
-    chatter-bot-api
+    ChatterBotAPI
     Copyright (C) 2011 pierredavidbelanger@gmail.com
  
     This program is free software: you can redistribute it and/or modify
@@ -17,9 +17,11 @@ package com.google.code.chatterbotapi;
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-public interface ChatterBotSession {
-
-    ChatterBotThought think(ChatterBotThought thought) throws Exception;
-    
-    String think(String text) throws Exception;
+namespace ChatterBotAPI {
+	
+	public enum ChatterBotType {
+		CLEVERBOT,
+		JABBERWACKY,
+		PANDORABOTS
+	}
 }
