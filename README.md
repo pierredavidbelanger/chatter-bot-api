@@ -8,6 +8,8 @@ If you are planing using the .NET version, maybe [this fork by Schumix](https://
 
 ## News
 
+**2015-09-21**: Thanks to [S.R](https://github.com/urban48), the python version is now also compatible with python 3.
+
 **2014-10-17**: Merged a bunch of nicely arranged pull requests sent by [Csaba Jakosa](https://github.com/megax). Those include works done by [Christian Gärtner](https://github.com/ChristianGaertner) (for the PHP version), and [Arnaud Aliès](https://github.com/mouuff) (for the Python version).
 
 **2014-10-11**: Moved to GitHub!
