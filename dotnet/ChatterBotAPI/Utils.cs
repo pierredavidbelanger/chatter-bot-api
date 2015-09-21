@@ -71,7 +71,11 @@ namespace ChatterBotAPI
             request.ContentType = "text/html";
             request.CookieContainer = container;
 
-            request.GetResponse();
+			var response = (HttpWebResponse)request.GetResponse();
+			using (var responseStreamReader = new StreamReader(response.GetResponseStream()))
+			{
+				responseStreamReader.ReadToEnd ();
+			}
 
             return container.GetCookies(request.RequestUri);
         }
@@ -95,13 +99,17 @@ namespace ChatterBotAPI
             request.ContentType = "application/x-www-form-urlencoded";
             request.ContentLength = postDataBytes.Length;
 
-            var outputStream = request.GetRequestStream();
-            outputStream.Write(postDataBytes, 0, postDataBytes.Length);
-            outputStream.Close();
+			using (var outputStream = request.GetRequestStream())
+			{
+				outputStream.Write(postDataBytes, 0, postDataBytes.Length);
+				outputStream.Close();
 
-            var response = (HttpWebResponse)request.GetResponse();
-            var responseStreamReader = new StreamReader(response.GetResponseStream());
-            return responseStreamReader.ReadToEnd().Trim();
+				var response = (HttpWebResponse)request.GetResponse();
+				using (var responseStreamReader = new StreamReader(response.GetResponseStream()))
+				{
+					return responseStreamReader.ReadToEnd().Trim();
+				}
+			}
         }
 
         public static string XPathSearch(string input, string expression)
