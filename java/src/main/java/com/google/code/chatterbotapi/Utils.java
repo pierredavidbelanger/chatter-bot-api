@@ -16,6 +16,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /*
@@ -57,9 +58,44 @@ class Utils {
         return String.format("%1$032X", hash);
     }
 
-    public static String request(String url, Map<String, String> cookies, Map<String, String> parameters) throws Exception {
+    public static String toAcceptLanguageTags(Locale... locales) {
+        // https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.4
+        //
+        // for example, if user ask for: Locale.CANADA_FRENCH, Locale.ENGLISH
+        // then this method will render: fr-CA;q=1.0, fr;q=0.99, en;q=0.5
+        //
+        if (locales.length == 0)
+            return "";
+        float qf = 1f / (float) locales.length;
+        float q = 1f;
+        StringBuilder s = new StringBuilder();
+        for (int i = 0; i < locales.length; i++) {
+            Locale locale = locales[i];
+            if (s.length() > 0)
+                s.append(", ");
+            if (!locale.getCountry().equals("")) {
+                s.append(locale.getLanguage()).append("-").append(locale.getCountry());
+                s.append(";q=" + q);
+                s.append(", ");
+                s.append(locale.getLanguage());
+                s.append(";q=" + (q - 0.01));
+            } else {
+                s.append(locale.getLanguage());
+                s.append(";q=" + q);
+            }
+            q -= qf;
+        }
+        return s.toString();
+    }
+
+    public static String request(String url, Map<String, String> headers, Map<String, String> cookies, Map<String, String> parameters) throws Exception {
         HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
         connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.95 Safari/537.36");
+        if (headers != null) {
+            for (Map.Entry<String, String> header : headers.entrySet()) {
+                connection.setRequestProperty(header.getKey(), header.getValue());
+            }
+        }
         if (cookies != null && !cookies.isEmpty()) {
             StringBuilder cookieHeader = new StringBuilder();
             for (String cookie : cookies.values()) {

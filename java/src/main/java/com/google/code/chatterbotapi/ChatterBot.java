@@ -1,5 +1,7 @@
 package com.google.code.chatterbotapi;
 
+import java.util.Locale;
+
 /*
     chatter-bot-api
     Copyright (C) 2011 pierredavidbelanger@gmail.com
@@ -19,5 +21,5 @@ package com.google.code.chatterbotapi;
 */
 public interface ChatterBot {
     
-    ChatterBotSession createSession();
+    ChatterBotSession createSession(Locale... locales);
 }

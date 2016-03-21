@@ -1,6 +1,7 @@
 package com.google.code.chatterbotapi;
 
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /*
@@ -31,15 +32,17 @@ class Cleverbot implements ChatterBot {
         this.endIndex = endIndex;
     }
 
-    public ChatterBotSession createSession() {
-        return new Session();
+    @Override
+    public ChatterBotSession createSession(Locale... locales) {
+        return new Session(locales);
     }
-    
+
     private class Session implements ChatterBotSession {
         private final Map<String, String> vars;
+        private final Map<String, String> headers;
         private final Map<String, String> cookies;
 
-        public Session() {
+        public Session(Locale... locales) {
             vars = new LinkedHashMap<String, String>();
             vars.put("start", "y");
             vars.put("icognoid", "wsf");
@@ -47,9 +50,12 @@ class Cleverbot implements ChatterBot {
             vars.put("sub", "Say");
             vars.put("islearning", "1");
             vars.put("cleanslate", "false");
+            headers = new LinkedHashMap<String, String>();
+            if (locales.length > 0)
+                headers.put("Accept-Language", Utils.toAcceptLanguageTags(locales));
             cookies = new LinkedHashMap<String, String>();
             try {
-                Utils.request(baseUrl, cookies, null);
+                Utils.request(baseUrl, headers, cookies, null);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -63,7 +69,7 @@ class Cleverbot implements ChatterBot {
             String formDataDigest = Utils.md5(formDataToDigest);
             vars.put("icognocheck", formDataDigest);
 
-            String response = Utils.request(serviceUrl, cookies, vars);
+            String response = Utils.request(serviceUrl, headers, cookies, vars);
             
             String[] responseValues = response.split("\r");
             

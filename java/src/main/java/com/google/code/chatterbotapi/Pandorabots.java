@@ -1,6 +1,7 @@
 package com.google.code.chatterbotapi;
 
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
@@ -28,7 +29,8 @@ class Pandorabots implements ChatterBot {
         this.botid = botid;
     }
 
-    public ChatterBotSession createSession() {
+    @Override
+    public ChatterBotSession createSession(Locale... locales) {
         return new Session();
     }
 
@@ -44,7 +46,7 @@ class Pandorabots implements ChatterBot {
         public ChatterBotThought think(ChatterBotThought thought) throws Exception {
             vars.put("input", thought.getText());
 
-            String response = Utils.request("http://www.pandorabots.com/pandora/talk-xml", null, vars);
+            String response = Utils.request("http://www.pandorabots.com/pandora/talk-xml", null, null, vars);
 
             ChatterBotThought responseThought = new ChatterBotThought();
 
