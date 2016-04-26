@@ -55,7 +55,7 @@
     
     abstract class ChatterBot
     {
-        public function createSession()
+        public function createSession($lang = 'en')
         {
             return null;
         }
@@ -128,21 +128,24 @@
             $this->endIndex = $endIndex;
         }        
 
-        public function createSession()
+        public function createSession($lang = 'en')
         {
-            return new _CleverbotSession($this);
+            return new _CleverbotSession($this, $lang);
         }
     }
     
     class _CleverbotSession extends ChatterBotSession
     {
         private $bot;
+        private $headers;
         private $cookies;
         private $vars;
 
-        public function __construct($bot)
+        public function __construct($bot, $lang)
         {
             $this->bot = $bot;
+            $this->headers = array();
+            $this->headers['Accept-Language'] = "$lang;q=1.0";
             $this->vars = array();
             $this->vars['start'] = 'y';
             $this->vars['icognoid'] = 'wsf';
@@ -151,7 +154,7 @@
             $this->vars['islearning'] = '1';
             $this->vars['cleanslate'] = 'false';
             $this->cookies = array();
-            _utils_request($this->bot->getBaseUrl(), $this->cookies, null);
+            _utils_request($this->bot->getBaseUrl(), $this->cookies, null, $this->headers);
         }
 
         public function thinkThought($thought)
@@ -161,7 +164,7 @@
             $dataToDigest = substr($data, 9, $this->bot->getEndIndex());
             $dataDigest = md5($dataToDigest);
             $this->vars['icognocheck'] = $dataDigest;
-            $response = _utils_request($this->bot->getServiceUrl(), $this->cookies, $this->vars);
+            $response = _utils_request($this->bot->getServiceUrl(), $this->cookies, $this->vars, $this->headers);
             $responseValues = explode("\r", $response);
             //self.vars['??'] = _utils_string_at_index($responseValues, 0);
             $this->vars['sessionid'] = _utils_string_at_index($responseValues, 1);
@@ -230,7 +233,7 @@
             $this->botid = $botid;
         }        
         
-        public function createSession()
+        public function createSession($lang = 'en')
         {
             return new _PandorabotsSession($this);
         }
@@ -271,7 +274,7 @@
     # Utils
     #################################################
 
-    function _utils_request($url, &$cookies, $params)
+    function _utils_request($url, &$cookies, $params, $headers = null)
     {
         $contextParams = array();
         $contextParams['http'] = array();
@@ -300,6 +303,20 @@
             else
             {
                 $contextParams['http']['header'] = $cookieHeader;
+            }
+        }
+        if (!is_null($headers))
+        {
+            foreach ($headers as $headerName => $headerValue)
+            {
+                if (isset($contextParams['http']['header']))
+                {
+                    $contextParams['http']['header'] .= "$headerName: $headerValue\r\n";
+                }
+                else
+                {
+                    $contextParams['http']['header'] = "$headerName: $headerValue\r\n";
+                }
             }
         }
         $context = stream_context_create($contextParams);
