@@ -52,12 +52,13 @@ namespace ChatterBotAPI
             this.url = url;
             this.endIndex = endIndex;
             vars = new Dictionary<string, string>();
-            vars["start"] = "y";
-            vars["icognoid"] = "wsf";
-            vars["fno"] = "0";
-            vars["sub"] = "Say";
+            //vars["start"] = "y";
+            vars["stimulus"] = "";
             vars["islearning"] = "1";
-            vars["cleanslate"] = "false";
+            vars["icognoid"] = "wsf";
+            //vars["fno"] = "0";
+            //vars["sub"] = "Say";
+            //vars["cleanslate"] = "false";
 			cookies = Utils.GetCookies(baseUrl);
         }
 
@@ -86,22 +87,22 @@ namespace ChatterBotAPI
             vars["vText2"] = Utils.StringAtIndex(responseValues, 9);
             vars["prevref"] = Utils.StringAtIndex(responseValues, 10);
             //vars[""] = Utils.StringAtIndex(responseValues, 11); ??
-            vars["emotionalhistory"] = Utils.StringAtIndex(responseValues, 12);
-            vars["ttsLocMP3"] = Utils.StringAtIndex(responseValues, 13);
-            vars["ttsLocTXT"] = Utils.StringAtIndex(responseValues, 14);
-            vars["ttsLocTXT3"] = Utils.StringAtIndex(responseValues, 15);
-            vars["ttsText"] = Utils.StringAtIndex(responseValues, 16);
-            vars["lineRef"] = Utils.StringAtIndex(responseValues, 17);
-            vars["lineURL"] = Utils.StringAtIndex(responseValues, 18);
-            vars["linePOST"] = Utils.StringAtIndex(responseValues, 19);
-            vars["lineChoices"] = Utils.StringAtIndex(responseValues, 20);
-            vars["lineChoicesAbbrev"] = Utils.StringAtIndex(responseValues, 21);
-            vars["typingData"] = Utils.StringAtIndex(responseValues, 22);
-            vars["divert"] = Utils.StringAtIndex(responseValues, 23);
+//            vars["emotionalhistory"] = Utils.StringAtIndex(responseValues, 12);
+//            vars["ttsLocMP3"] = Utils.StringAtIndex(responseValues, 13);
+//            vars["ttsLocTXT"] = Utils.StringAtIndex(responseValues, 14);
+//            vars["ttsLocTXT3"] = Utils.StringAtIndex(responseValues, 15);
+//            vars["ttsText"] = Utils.StringAtIndex(responseValues, 16);
+//            vars["lineRef"] = Utils.StringAtIndex(responseValues, 17);
+//            vars["lineURL"] = Utils.StringAtIndex(responseValues, 18);
+//            vars["linePOST"] = Utils.StringAtIndex(responseValues, 19);
+//            vars["lineChoices"] = Utils.StringAtIndex(responseValues, 20);
+//            vars["lineChoicesAbbrev"] = Utils.StringAtIndex(responseValues, 21);
+//            vars["typingData"] = Utils.StringAtIndex(responseValues, 22);
+//            vars["divert"] = Utils.StringAtIndex(responseValues, 23);
 
             var responseThought = new ChatterBotThought();
 
-            responseThought.Text = Utils.StringAtIndex(responseValues, 16);
+            responseThought.Text = Utils.StringAtIndex(responseValues, 0);
 
             return responseThought;
         }
