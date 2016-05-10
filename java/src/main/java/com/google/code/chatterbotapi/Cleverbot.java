@@ -44,12 +44,13 @@ class Cleverbot implements ChatterBot {
 
         public Session(Locale... locales) {
             vars = new LinkedHashMap<String, String>();
-            vars.put("start", "y");
-            vars.put("icognoid", "wsf");
-            vars.put("fno", "0");
-            vars.put("sub", "Say");
+            //vars.put("start", "y");
+            vars.put("stimulus", "");
             vars.put("islearning", "1");
-            vars.put("cleanslate", "false");
+            vars.put("icognoid", "wsf");
+            //vars.put("fno", "0");
+            //vars.put("sub", "Say");
+            //vars.put("cleanslate", "false");
             headers = new LinkedHashMap<String, String>();
             if (locales.length > 0)
                 headers.put("Accept-Language", Utils.toAcceptLanguageTags(locales));
@@ -85,22 +86,22 @@ class Cleverbot implements ChatterBot {
             vars.put("vText2", Utils.stringAtIndex(responseValues, 9));
             vars.put("prevref", Utils.stringAtIndex(responseValues, 10));
             //vars.put("", Utils.stringAtIndex(responseValues, 11)); ??
-            vars.put("emotionalhistory", Utils.stringAtIndex(responseValues, 12));
-            vars.put("ttsLocMP3", Utils.stringAtIndex(responseValues, 13));
-            vars.put("ttsLocTXT", Utils.stringAtIndex(responseValues, 14));
-            vars.put("ttsLocTXT3", Utils.stringAtIndex(responseValues, 15));
-            vars.put("ttsText", Utils.stringAtIndex(responseValues, 16));
-            vars.put("lineRef", Utils.stringAtIndex(responseValues, 17));
-            vars.put("lineURL", Utils.stringAtIndex(responseValues, 18));
-            vars.put("linePOST", Utils.stringAtIndex(responseValues, 19));
-            vars.put("lineChoices", Utils.stringAtIndex(responseValues, 20));
-            vars.put("lineChoicesAbbrev", Utils.stringAtIndex(responseValues, 21));
-            vars.put("typingData", Utils.stringAtIndex(responseValues, 22));
-            vars.put("divert", Utils.stringAtIndex(responseValues, 23));
+//            vars.put("emotionalhistory", Utils.stringAtIndex(responseValues, 12));
+//            vars.put("ttsLocMP3", Utils.stringAtIndex(responseValues, 13));
+//            vars.put("ttsLocTXT", Utils.stringAtIndex(responseValues, 14));
+//            vars.put("ttsLocTXT3", Utils.stringAtIndex(responseValues, 15));
+//            vars.put("ttsText", Utils.stringAtIndex(responseValues, 16));
+//            vars.put("lineRef", Utils.stringAtIndex(responseValues, 17));
+//            vars.put("lineURL", Utils.stringAtIndex(responseValues, 18));
+//            vars.put("linePOST", Utils.stringAtIndex(responseValues, 19));
+//            vars.put("lineChoices", Utils.stringAtIndex(responseValues, 20));
+//            vars.put("lineChoicesAbbrev", Utils.stringAtIndex(responseValues, 21));
+//            vars.put("typingData", Utils.stringAtIndex(responseValues, 22));
+//            vars.put("divert", Utils.stringAtIndex(responseValues, 23));
             
             ChatterBotThought responseThought = new ChatterBotThought();
 
-            responseThought.setText(Utils.stringAtIndex(responseValues, 16));
+            responseThought.setText(Utils.stringAtIndex(responseValues, 0));
             
             return responseThought;
         }
