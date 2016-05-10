@@ -12,6 +12,8 @@ else:
     from urllib2 import build_opener, HTTPCookieProcessor
     import cookielib
 
+from collections import OrderedDict
+
 import uuid
 import xml.dom.minidom
 
@@ -93,13 +95,14 @@ class _CleverbotSession(ChatterBotSession):
 
     def __init__(self, bot):
         self.bot = bot
-        self.vars = {}
-        self.vars['start'] = 'y'
-        self.vars['icognoid'] = 'wsf'
-        self.vars['fno'] = '0'
-        self.vars['sub'] = 'Say'
+        self.vars = OrderedDict()
+        #self.vars['start'] = 'y'
+        self.vars['stimulus'] = ''
         self.vars['islearning'] = '1'
-        self.vars['cleanslate'] = 'false'
+        self.vars['icognoid'] = 'wsf'
+        #self.vars['fno'] = '0'
+        #self.vars['sub'] = 'Say'
+        #self.vars['cleanslate'] = 'false'
         self.cookieJar = cookielib.CookieJar()
         self.opener = build_opener(HTTPCookieProcessor(self.cookieJar))
         self.opener.open(self.bot.baseUrl)
@@ -125,20 +128,20 @@ class _CleverbotSession(ChatterBotSession):
         self.vars['vText2'] = _utils_string_at_index(response_values, 9)
         self.vars['prevref'] = _utils_string_at_index(response_values, 10)
         #self.vars['??'] = _utils_string_at_index(response_values, 11)
-        self.vars['emotionalhistory'] = _utils_string_at_index(response_values, 12)
-        self.vars['ttsLocMP3'] = _utils_string_at_index(response_values, 13)
-        self.vars['ttsLocTXT'] = _utils_string_at_index(response_values, 14)
-        self.vars['ttsLocTXT3'] = _utils_string_at_index(response_values, 15)
-        self.vars['ttsText'] = _utils_string_at_index(response_values, 16)
-        self.vars['lineRef'] = _utils_string_at_index(response_values, 17)
-        self.vars['lineURL'] = _utils_string_at_index(response_values, 18)
-        self.vars['linePOST'] = _utils_string_at_index(response_values, 19)
-        self.vars['lineChoices'] = _utils_string_at_index(response_values, 20)
-        self.vars['lineChoicesAbbrev'] = _utils_string_at_index(response_values, 21)
-        self.vars['typingData'] = _utils_string_at_index(response_values, 22)
-        self.vars['divert'] = _utils_string_at_index(response_values, 23)
+#        self.vars['emotionalhistory'] = _utils_string_at_index(response_values, 12)
+#        self.vars['ttsLocMP3'] = _utils_string_at_index(response_values, 13)
+#        self.vars['ttsLocTXT'] = _utils_string_at_index(response_values, 14)
+#        self.vars['ttsLocTXT3'] = _utils_string_at_index(response_values, 15)
+#        self.vars['ttsText'] = _utils_string_at_index(response_values, 16)
+#        self.vars['lineRef'] = _utils_string_at_index(response_values, 17)
+#        self.vars['lineURL'] = _utils_string_at_index(response_values, 18)
+#        self.vars['linePOST'] = _utils_string_at_index(response_values, 19)
+#        self.vars['lineChoices'] = _utils_string_at_index(response_values, 20)
+#        self.vars['lineChoicesAbbrev'] = _utils_string_at_index(response_values, 21)
+#        self.vars['typingData'] = _utils_string_at_index(response_values, 22)
+#        self.vars['divert'] = _utils_string_at_index(response_values, 23)
         response_thought = ChatterBotThought()
-        response_thought.text = _utils_string_at_index(response_values, 16)
+        response_thought.text = _utils_string_at_index(response_values, 0)
         return response_thought
 
 #################################################
