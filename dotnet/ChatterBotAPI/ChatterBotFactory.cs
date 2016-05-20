@@ -32,7 +32,7 @@ namespace ChatterBotAPI
             switch (type)
             {
                 case ChatterBotType.CLEVERBOT:
-                    return new Cleverbot("http://www.cleverbot.com/", "http://www.cleverbot.com/webservicemin", 26);
+                    return new Cleverbot("http://www.cleverbot.com/", "http://www.cleverbot.com/webservicemin?uc=165", 26);
                 case ChatterBotType.JABBERWACKY:
                     return new Cleverbot("http://jabberwacky.com", "http://jabberwacky.com/webservicemin", 20);
                 case ChatterBotType.PANDORABOTS:
