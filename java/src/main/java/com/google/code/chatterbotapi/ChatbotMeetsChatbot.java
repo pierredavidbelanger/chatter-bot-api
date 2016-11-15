@@ -44,7 +44,7 @@ public class ChatBotMeetsChatbot
         System.out.print("Select the second chatbot type (enter a number)\n1: Cleverbot\n2: Jabberwacky\n3: Pandorabots\n>");
         botChoiceTwo = input.nextInt();
         
-        System.out.print("How many times will you like to cycle through the exchange of words between the bots?\nCan be any integer (<1 is infinite and will require CTR + C)\n>");
+        System.out.print("How many times will you like to cycle through the exchange of words between the bots?\nCan be any integer (<0 is infinite and will require CTR + C)\n>");
         conversationLoopNum = input.nextInt();
         
         switch(botChoiceOne)    //The first bot choice will be converted into a string later to be converted to enum value
@@ -79,7 +79,7 @@ public class ChatBotMeetsChatbot
          * The for loop below handles the conversation between the two bots.
          */
 
-        for (int leftoverLoops = conversationLoopNum < 1 ? 0 : conversationLoopNum; leftoverLoops != 1; leftoverLoops--)
+        for (int leftoverLoops = conversationLoopNum; leftoverLoops != 0; leftoverLoops--)
         {
             System.out.println("bot1> " + s);
 
@@ -88,19 +88,5 @@ public class ChatBotMeetsChatbot
 
             s = bot1session.think(s);
         }
-
-        /*
-         * Note: leftoverLoops is initialized using a ternary conditional statement.
-         * This is so that it can be used in a for loop. It is equivalent to the following if/else statement:
-         *
-         * if (conversationLoopNum < 1)
-         * {
-         *      leftoverLoops = 0;
-         * }
-         * else
-         * {
-         *      leftoverLoops = conversationLoopNum;
-         * }
-         */
     }
 }
