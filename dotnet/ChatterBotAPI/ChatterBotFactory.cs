@@ -32,9 +32,9 @@ namespace ChatterBotAPI
             switch (type)
             {
                 case ChatterBotType.CLEVERBOT:
-                    return new Cleverbot("http://www.cleverbot.com/", "http://www.cleverbot.com/webservicemin?uc=321", 26);
+                    return new Cleverbot("http://www.cleverbot.com/", "http://www.cleverbot.com/webservicemin?uc=321&botapi=chatterbotapi", 26);
                 case ChatterBotType.JABBERWACKY:
-                    return new Cleverbot("http://jabberwacky.com", "http://jabberwacky.com/webservicemin", 20);
+                    return new Cleverbot("http://jabberwacky.com", "http://jabberwacky.com/webservicemin?botapi=chatterbotapi", 20);
                 case ChatterBotType.PANDORABOTS:
                     if (arg == null) throw new ApplicationException("PANDORABOTS needs a botid arg");
                     return new Pandorabots(arg.ToString());

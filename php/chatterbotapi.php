@@ -36,11 +36,11 @@
             {
                 case ChatterBotType::CLEVERBOT:
                 {
-                    return new _Cleverbot('http://www.cleverbot.com', 'http://www.cleverbot.com/webservicemin?uc=321', 26);
+                    return new _Cleverbot('http://www.cleverbot.com', 'http://www.cleverbot.com/webservicemin?uc=321&botapi=chatterbotapi', 26);
                 }
                 case ChatterBotType::JABBERWACKY:
                 {
-                    return new _Cleverbot('http://jabberwacky.com', 'http://jabberwacky.com/webservicemin', 20);
+                    return new _Cleverbot('http://jabberwacky.com', 'http://jabberwacky.com/webservicemin?botapi=chatterbotapi', 20);
                 }
                 case ChatterBotType::PANDORABOTS:
                 {

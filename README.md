@@ -8,6 +8,13 @@ If you are planing using the .NET version, maybe [this fork by Schumix](https://
 
 ## News
 
+**2017-01-04**: Folks at [Existor](http://www.existor.com/) (the company behind [Cleverbot](http://www.cleverbot.com/)) have concerns because this project goes against their terms of usage.
+Indeed, their service costs money (to host their huge servers for example) and this project allows users to bypass their ads.
+I acknowledged that this project does not makes a fair use of their service.
+I would be the first to be mad if someone would make an unfair use of one of my project, so I understand their positions.
+We agreed on this: this project will send a parameter on each request that will uniquely identify the project itself.
+They will collect metrics, and let the project alone if they found that the project usage does not make a big difference for them.
+
 **2015-09-21**: Thanks to [S.R](https://github.com/urban48), the python version is now also compatible with python 3.
 
 **2014-10-17**: Merged a bunch of nicely arranged pull requests sent by [Csaba Jakosa](https://github.com/megax). Those include works done by [Christian Gärtner](https://github.com/ChristianGaertner) (for the PHP version), and [Arnaud Aliès](https://github.com/mouuff) (for the Python version).
