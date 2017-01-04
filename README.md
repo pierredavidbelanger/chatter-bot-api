@@ -12,7 +12,7 @@ If you are planing using the .NET version, maybe [this fork by Schumix](https://
 Indeed, their service costs money (to host their huge servers for example) and this project allows users to bypass their ads.
 I acknowledged that this project does not makes a fair use of their service.
 I would be the first to be mad if someone would make an unfair use of one of my project, so I understand their positions.
-We agreed on this: this project will send a parameter on each request that will uniquely identify the project itself.
+We agreed on this: this project will send [a parameter](https://github.com/pierredavidbelanger/chatter-bot-api/blob/c196833f63f2b4d68805b66bd12382a1097dc9c9/java/src/main/java/com/google/code/chatterbotapi/ChatterBotFactory.java#L29) on each request that will uniquely identify the project itself.
 They will collect metrics, and let the project alone if they found that the project usage does not make a big difference for them.
 
 **2015-09-21**: Thanks to [S.R](https://github.com/urban48), the python version is now also compatible with python 3.
