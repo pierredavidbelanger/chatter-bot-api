@@ -45,7 +45,7 @@ Just add this dependency to your pom file:
 <dependency>
     <groupId>ca.pjer</groupId>
     <artifactId>chatter-bot-api</artifactId>
-    <version>1.4.3</version>
+    <version>1.4.4</version>
 </dependency>
 ```
 
