@@ -26,7 +26,7 @@ public class ChatterBotFactory {
     public ChatterBot create(ChatterBotType type, Object arg) throws Exception {
         switch (type) {
             case CLEVERBOT:
-                return new Cleverbot("http://www.cleverbot.com", "http://www.cleverbot.com/webservicemin?uc=321&botapi=chatterbotapi", 35);
+                return new Cleverbot("http://www.cleverbot.com", "http://www.cleverbot.com/webservicemin?uc=3210&botapi=chatterbotapi", 35);
             case JABBERWACKY:
                 return new Cleverbot("http://jabberwacky.com", "http://jabberwacky.com/webservicemin?botapi=chatterbotapi", 29);
             case PANDORABOTS:
