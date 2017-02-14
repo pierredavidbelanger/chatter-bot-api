@@ -24,6 +24,7 @@ public class ChatterBotApiTest {
     public static void main(String[] args) throws Exception {
         ChatterBotFactory factory = new ChatterBotFactory();
 
+        // To get you API Key visit https://www.cleverbot.com/api/
         ChatterBot bot1 = factory.create(ChatterBotType.CLEVERBOT, "YOURAPIKEY");
         ChatterBotSession bot1session = bot1.createSession();
 
