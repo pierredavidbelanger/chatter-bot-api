@@ -1,5 +1,7 @@
 package com.google.code.chatterbotapi;
 
+import okhttp3.OkHttpClient;
+
 /*
     chatter-bot-api
     Copyright (C) 2011 pierredavidbelanger@gmail.com
@@ -19,16 +21,29 @@ package com.google.code.chatterbotapi;
 */
 public class ChatterBotFactory {
 
+    private final OkHttpClient httpClient;
+
+    public ChatterBotFactory(OkHttpClient httpClient) {
+        assert httpClient != null;
+        this.httpClient = httpClient;
+    }
+
+    public ChatterBotFactory() {
+        this(new OkHttpClient());
+    }
+
     public ChatterBot create(ChatterBotType type) throws Exception {
         return create(type, null);
     }
 
     public ChatterBot create(ChatterBotType type, Object arg) throws Exception {
+        assert type != null;
         switch (type) {
             case CLEVERBOT:
-                return new Cleverbot("http://www.cleverbot.com", "http://www.cleverbot.com/webservicemin?uc=777&botapi=chatterbotapi", 35);
-            case JABBERWACKY:
-                return new Cleverbot("http://jabberwacky.com", "http://jabberwacky.com/webservicemin?botapi=chatterbotapi", 29);
+                if (arg == null) {
+                    throw new Exception("CLEVERBOT needs an API Key. Please see https://www.cleverbot.com/api/");
+                }
+                return new Cleverbot(httpClient, arg.toString());
             case PANDORABOTS:
                 if (arg == null) {
                     throw new Exception("PANDORABOTS needs a botid arg");

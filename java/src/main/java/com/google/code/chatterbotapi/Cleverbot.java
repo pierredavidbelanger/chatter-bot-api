@@ -1,8 +1,15 @@
 package com.google.code.chatterbotapi;
 
-import java.util.LinkedHashMap;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
+import java.io.InputStream;
 import java.util.Locale;
-import java.util.Map;
 
 /*
     chatter-bot-api
@@ -22,14 +29,18 @@ import java.util.Map;
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 class Cleverbot implements ChatterBot {
-    private final String baseUrl;
-    private final String serviceUrl;
-    private int endIndex;
 
-    public Cleverbot(String baseUrl, String serviceUrl, int endIndex) {
-        this.baseUrl = baseUrl;
-        this.serviceUrl = serviceUrl;
-        this.endIndex = endIndex;
+    private final ObjectMapper objectMapper;
+    private final HttpUrl baseUrl;
+    private final OkHttpClient httpClient;
+    private final String apiKey;
+
+    public Cleverbot(OkHttpClient httpClient, String apiKey) {
+        objectMapper = new ObjectMapper();
+        baseUrl = HttpUrl.parse("https://www.cleverbot.com/getreply")
+                .newBuilder().addQueryParameter("key", apiKey).build();
+        this.httpClient = httpClient;
+        this.apiKey = apiKey;
     }
 
     @Override
@@ -38,71 +49,50 @@ class Cleverbot implements ChatterBot {
     }
 
     private class Session implements ChatterBotSession {
-        private final Map<String, String> vars;
-        private final Map<String, String> headers;
-        private final Map<String, String> cookies;
+
+        private final Locale[] locales;
+
+        private Reply lastReply;
 
         public Session(Locale... locales) {
-            vars = new LinkedHashMap<String, String>();
-            //vars.put("start", "y");
-            vars.put("stimulus", "");
-            vars.put("islearning", "1");
-            vars.put("icognoid", "wsf");
-            //vars.put("fno", "0");
-            //vars.put("sub", "Say");
-            //vars.put("cleanslate", "false");
-            headers = new LinkedHashMap<String, String>();
-            if (locales.length > 0)
-                headers.put("Accept-Language", Utils.toAcceptLanguageTags(locales));
-            cookies = new LinkedHashMap<String, String>();
-            try {
-                Utils.request(baseUrl, headers, cookies, null);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+            this.locales = locales;
         }
-        
+
         public ChatterBotThought think(ChatterBotThought thought) throws Exception {
-            vars.put("stimulus", thought.getText());
 
-            String formData = Utils.parametersToWWWFormURLEncoded(vars);
-            String formDataToDigest = formData.substring(9, endIndex);
-            String formDataDigest = Utils.md5(formDataToDigest);
-            vars.put("icognocheck", formDataDigest);
+            HttpUrl.Builder urlBuilder = baseUrl.newBuilder();
 
-            String response = Utils.request(serviceUrl, headers, cookies, vars);
-            
-            String[] responseValues = response.split("\r");
-            
-            //vars.put("", Utils.stringAtIndex(responseValues, 0)); ??
-            vars.put("sessionid", Utils.stringAtIndex(responseValues, 1));
-            vars.put("logurl", Utils.stringAtIndex(responseValues, 2));
-            vars.put("vText8", Utils.stringAtIndex(responseValues, 3));
-            vars.put("vText7", Utils.stringAtIndex(responseValues, 4));
-            vars.put("vText6", Utils.stringAtIndex(responseValues, 5));
-            vars.put("vText5", Utils.stringAtIndex(responseValues, 6));
-            vars.put("vText4", Utils.stringAtIndex(responseValues, 7));
-            vars.put("vText3", Utils.stringAtIndex(responseValues, 8));
-            vars.put("vText2", Utils.stringAtIndex(responseValues, 9));
-            vars.put("prevref", Utils.stringAtIndex(responseValues, 10));
-            //vars.put("", Utils.stringAtIndex(responseValues, 11)); ??
-//            vars.put("emotionalhistory", Utils.stringAtIndex(responseValues, 12));
-//            vars.put("ttsLocMP3", Utils.stringAtIndex(responseValues, 13));
-//            vars.put("ttsLocTXT", Utils.stringAtIndex(responseValues, 14));
-//            vars.put("ttsLocTXT3", Utils.stringAtIndex(responseValues, 15));
-//            vars.put("ttsText", Utils.stringAtIndex(responseValues, 16));
-//            vars.put("lineRef", Utils.stringAtIndex(responseValues, 17));
-//            vars.put("lineURL", Utils.stringAtIndex(responseValues, 18));
-//            vars.put("linePOST", Utils.stringAtIndex(responseValues, 19));
-//            vars.put("lineChoices", Utils.stringAtIndex(responseValues, 20));
-//            vars.put("lineChoicesAbbrev", Utils.stringAtIndex(responseValues, 21));
-//            vars.put("typingData", Utils.stringAtIndex(responseValues, 22));
-//            vars.put("divert", Utils.stringAtIndex(responseValues, 23));
-            
+            String input = thought.getText();
+            if (input != null) {
+                urlBuilder.setQueryParameter("input", input);
+            }
+
+            Reply lastReply = this.lastReply;
+            if (lastReply != null && lastReply.getConversationState() != null) {
+                urlBuilder.setQueryParameter("cs", lastReply.getConversationState());
+            }
+
+            HttpUrl url = urlBuilder.build();
+
+            Request request = new Request.Builder().get().url(url).build();
+
+            Response response = httpClient.newCall(request).execute();
+            if (!response.isSuccessful())
+                throw new Exception("Unable to call Cleverbot: " + response.message());
+
+            Reply reply;
+            InputStream bodyStream = response.body().byteStream();
+            try {
+                //noinspection unchecked
+                reply = objectMapper.readValue(bodyStream, Reply.class);
+            } finally {
+                bodyStream.close();
+            }
+
+            this.lastReply = reply;
+
             ChatterBotThought responseThought = new ChatterBotThought();
-
-            responseThought.setText(Utils.stringAtIndex(responseValues, 0));
-            
+            responseThought.setText(reply.getOutput());
             return responseThought;
         }
 
@@ -110,6 +100,32 @@ class Cleverbot implements ChatterBot {
             ChatterBotThought thought = new ChatterBotThought();
             thought.setText(text);
             return think(thought).getText();
+        }
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class Reply {
+
+        @JsonProperty("cs")
+        private String conversationState;
+
+        @JsonProperty("output")
+        private String output;
+
+        public String getConversationState() {
+            return conversationState;
+        }
+
+        public void setConversationState(String conversationState) {
+            this.conversationState = conversationState;
+        }
+
+        public String getOutput() {
+            return output;
+        }
+
+        public void setOutput(String output) {
+            this.output = output;
         }
     }
 }

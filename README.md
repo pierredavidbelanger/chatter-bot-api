@@ -1,12 +1,14 @@
 # Chatter Bot API
 
-A Mono/.NET, JAVA, Python and PHP chatter bot API that supports [Cleverbot](http://www.cleverbot.com/), [JabberWacky](http://jabberwacky.com/) and [Pandorabots](http://www.pandorabots.com/).
+A Mono/.NET, JAVA, Python and PHP chatter bot API that supports [Cleverbot](http://www.cleverbot.com/) and [Pandorabots](http://www.pandorabots.com/).
 
 For a Ruby version, have a look at [Gabriele Cirulli cleverbot-api implementation](https://github.com/gabrielecirulli/cleverbot-api).
 
 If you are planing using the .NET version, maybe [this fork by Schumix](https://github.com/Schumix/ChatterBotApi) is worth looking at.
 
 ## News
+
+**2017-02-13**: The Java version is now using the [official Cleverbot API](https://www.cleverbot.com/api/)
 
 **2017-01-04**: Folks at [Existor](http://www.existor.com/) (the company behind [Cleverbot](http://www.cleverbot.com/)) have concerns because this project goes against their terms of usage.
 Indeed, their service costs money (to host their huge servers for example) and this project allows users to bypass their ads.
@@ -35,19 +37,7 @@ They will collect metrics, and let the project alone if they found that the proj
 
 I encourage you to download a compiled version of the library (*TBA*), and try the example below in this page. I tried to keep all the libraries free from dependencies, so you do not need to download anything else.
 
-Be sure to always use the latest version of the library, as the Cleverbot/JabberWacky Web Service is changing over time. I suppose it is not meant to be public.
-
-### Maven
-
-Just add this dependency to your pom file:
-
-```xml
-<dependency>
-    <groupId>ca.pjer</groupId>
-    <artifactId>chatter-bot-api</artifactId>
-    <version>1.4.6</version>
-</dependency>
-```
+Be sure to always use the latest version of the library, as the Cleverbot Web Service is changing over time. I suppose it is not meant to be public.
 
 ## Going further
 
@@ -55,9 +45,9 @@ If you like what you see, browse and comment the source code. If you found a bug
 
 ## Disclaimer
 
-I am not the owner of Cleverbot/JabberWacky nor Pandorabots.
+I am not the owner of Cleverbot nor Pandorabots.
 
-My work (the Cleverbot/JabberWacky part) is based on [pycleverbot](https://code.google.com/p/pycleverbot/), a Python bindings for the Cleverbot.
+My work (the Cleverbot part) is based on [pycleverbot](https://code.google.com/p/pycleverbot/), a Python bindings for the Cleverbot.
 
 ## Contact
 
@@ -132,6 +122,18 @@ End Class
 
 ### JAVA
 
+#### Maven
+
+Just add this dependency to your pom file:
+
+```xml
+<dependency>
+    <groupId>ca.pjer</groupId>
+    <artifactId>chatter-bot-api</artifactId>
+    <version>2.0.0</version>
+</dependency>
+```
+
 ```java
 package com.google.code.chatterbotapi.test;
 
@@ -142,7 +144,7 @@ public class ChatterBotApiTest {
     public static void main(String[] args) throws Exception {
         ChatterBotFactory factory = new ChatterBotFactory();
 
-        ChatterBot bot1 = factory.create(ChatterBotType.CLEVERBOT);
+        ChatterBot bot1 = factory.create(ChatterBotType.CLEVERBOT, "YOURAPIKEY");
         ChatterBotSession bot1session = bot1.createSession();
 
         ChatterBot bot2 = factory.create(ChatterBotType.PANDORABOTS, "b0dafd24ee35a477");

@@ -24,7 +24,7 @@ public class ChatterBotApiTest {
     public static void main(String[] args) throws Exception {
         ChatterBotFactory factory = new ChatterBotFactory();
 
-        ChatterBot bot1 = factory.create(ChatterBotType.CLEVERBOT);
+        ChatterBot bot1 = factory.create(ChatterBotType.CLEVERBOT, "YOURAPIKEY");
         ChatterBotSession bot1session = bot1.createSession();
 
         ChatterBot bot2 = factory.create(ChatterBotType.PANDORABOTS, "b0dafd24ee35a477");
