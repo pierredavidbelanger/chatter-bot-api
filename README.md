@@ -8,6 +8,8 @@ If you are planing using the .NET version, maybe [this fork by Schumix](https://
 
 ## News
 
+**2017-02-13**: This project's [v2 branch](https://github.com/pierredavidbelanger/chatter-bot-api/tree/v2#java) is an in progress refactor/cleanup effort. For now I have a working Java version that uses the new [Cleverbot official API](https://www.cleverbot.com/api/). No code breaking changes were required, except that you will now need an API Key when calling `factory.create(ChatterBotType.CLEVERBOT, "YOURAPIKEY")`.
+
 **2017-01-04**: Folks at [Existor](http://www.existor.com/) (the company behind [Cleverbot](http://www.cleverbot.com/)) have concerns because this project goes against their terms of usage.
 Indeed, their service costs money (to host their huge servers for example) and this project allows users to bypass their ads.
 I acknowledged that this project does not makes a fair use of their service.
