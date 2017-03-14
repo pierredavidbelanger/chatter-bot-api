@@ -51,7 +51,7 @@ namespace ChatterBotAPI
         {
             vars["input"] = thought.Text;
 
-            var response = Utils.Post("http://www.pandorabots.com/pandora/talk-xml", vars, null);
+            var response = Utils.Post("https://www.pandorabots.com/pandora/talk-xml", vars, null);
 
             var responseThought = new ChatterBotThought();
             responseThought.Text = Utils.XPathSearch(response, "//result/that/text()");
