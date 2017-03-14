@@ -255,7 +255,7 @@
         {
             $this->vars['input'] = $thought->getText();
             $dummy = NULL;
-            $response = _utils_request('http://www.pandorabots.com/pandora/talk-xml', $dummy, $this->vars);
+            $response = _utils_request('https://www.pandorabots.com/pandora/talk-xml', $dummy, $this->vars);
             $element = new SimpleXMLElement($response);
             $result = $element->xpath('//result/that/text()');
             $responseThought = new ChatterBotThought();
